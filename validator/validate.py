@@ -283,14 +283,13 @@ RULES = [
 # ---------------------------------------------------------------------------
 # Ứng viên lỗi gán nhãn — phần C (Quân)
 # ---------------------------------------------------------------------------
-# Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch.
+# Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch. 
 CAND_MIN_SEGMENT_PIXELS = 100
 CAND_MIN_OVERLAP_PIXELS = 32
 CAND_MIN_CLASS_OVERLAP = 0.2
 CAND_MIN_MATCH_COVERAGE = 0.25
 CAND_DRIFT_COVERAGE = 0.5
 CAND_NEARBY_SCALE = 0.75
-
 
 def find_candidates(d: Delivery) -> list[dict]:
     """Tạo ứng viên từ detection/panoptic; người xem ảnh quyết định lỗi thật."""
