@@ -1,7 +1,7 @@
-# Nhóm <<XX>>
+# Nhóm 05
 
-- Seed luyện tập: <<số>>
-- Mã đề ẩn: <<de_an_XX>>
+- Seed luyện tập: 5007
+- Mã đề ẩn: de_an_05
 - Repo: https://github.com/henrykhanh-ai/K5-L23-Day10-2A202603055-NguyenDuyKhanh-Dataset-Release-Handover
 - Nhóm 4 người (lead: Nguyễn Duy Khánh)
 
