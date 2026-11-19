@@ -15,6 +15,7 @@ Phân công:
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import struct
@@ -182,20 +183,95 @@ def check_duplicate_box(d: Delivery) -> list[dict]:
 # Luật — phần B (Loan): metadata + panoptic. Mỗi hàm trả về list {"type", "target"}.
 # ---------------------------------------------------------------------------
 def check_scene_leak(d: Delivery) -> list[dict]:
-    return []   # TODO(B): một scene_id có ảnh ở cả train và val -> target là scene_id
+    """Một cảnh có ảnh ở cả train và val -> báo 1 lỗi, target = scene_id."""
+    splits_by_scene: dict[str, set[str]] = {}          # scene_id -> {các split gặp được}
+    for item in d.metadata.get("items", []):
+        scene = item.get("scene_id")
+        split = str(item.get("split", "")).strip().lower()
+        if not scene or not split:
+            continue                                     # dòng thiếu thông tin thì bỏ qua
+        splits_by_scene.setdefault(scene, set()).add(split)
 
+    errors = []
+    for scene in sorted(splits_by_scene):
+        if len(splits_by_scene[scene]) > 1:              # vừa train vừa val
+            errors.append({"type": "scene_leak", "target": scene})
+    return errors
 
 def check_guideline_mismatch(d: Delivery) -> list[dict]:
-    return []   # TODO(B): guideline_version của ảnh khác guideline của job trong jobs.csv
+    """guideline_version của ảnh khác guideline ghi ở job (jobs.csv) -> target = tên ảnh."""
+    job_guideline: dict[str, str] = {}                   # job_id -> guideline của job
+    jobs_path = d.root / "jobs.csv"
+    if jobs_path.is_file():
+        with jobs_path.open(newline="", encoding="utf-8-sig") as f:
+            for row in csv.DictReader(f):                # mỗi dòng thành dict theo tên cột
+                job_id = (row.get("job_id") or "").strip()
+                if job_id:
+                    job_guideline[job_id] = (row.get("guideline") or "").strip()
+
+    errors = []
+    for item in d.metadata.get("items", []):
+        job_id = str(item.get("job_id", "")).strip()
+        expected = job_guideline.get(job_id)
+        if expected is None:
+            continue                                     # job không có trong jobs.csv thì bỏ qua
+        actual = str(item.get("guideline_version", "")).strip()
+        if actual != expected:
+            errors.append({"type": "guideline_mismatch", "target": Path(item["image"]).stem})
+    return errors
 
 
 def check_invalid_category_id(d: Delivery) -> list[dict]:
-    return []   # TODO(B): category_id trong segments_info không có trong categories
+    """category_id của segment không có trong categories -> target = tên ảnh (mỗi ảnh 1 lần)."""
+    valid_ids = {c.get("id") for c in d.panoptic.get("categories", [])}
+    image_name = {im.get("id"): Path(im.get("file_name", "")).stem
+                  for im in d.panoptic.get("images", [])}          # image_id -> tên ảnh
+
+    errors = []
+    for ann in d.panoptic.get("annotations", []):
+        name = image_name.get(ann.get("image_id")) or Path(ann.get("file_name", "")).stem
+        if not name:
+            continue
+        for seg in ann.get("segments_info", []):
+            if seg.get("category_id") not in valid_ids:
+                errors.append({"type": "invalid_category_id", "target": name})
+                break                                    # 1 ảnh chỉ báo 1 lần
+    return errors
 
 
 def check_thing_overlap(d: Delivery) -> list[dict]:
-    return []   # TODO(B): đếm pixel từng segment (pngutil.read_rgb, id = R+G*256+B*65536), area khai > pixel thật
+    """area khai báo > số pixel thật của segment trong mask -> target = tên ảnh (mỗi ảnh 1 lần)."""
+    import pngutil                                       # scripts/pngutil.py (khung đã thêm đường dẫn)
+    from collections import Counter
 
+    image_name = {im.get("id"): Path(im.get("file_name", "")).stem
+                  for im in d.panoptic.get("images", [])}
+
+    errors = []
+    for ann in d.panoptic.get("annotations", []):
+        name = image_name.get(ann.get("image_id")) or Path(ann.get("file_name", "")).stem
+        if not name:
+            continue
+        mask_path = d.root / "masks" / Path(ann.get("file_name") or f"{name}.png").name
+        if not mask_path.is_file():
+            continue
+        try:
+            _w, _h, px = pngutil.read_rgb(mask_path)
+        except (OSError, ValueError):
+            continue                                     # mask hỏng thì bỏ qua, không đoán
+
+        # Đếm pixel theo màu (R, G, B), rồi đổi màu -> segment id = R + G*256 + B*65536
+        color_counts = Counter(zip(px[0::3], px[1::3], px[2::3]))
+        real = {r + g * 256 + b * 65536: n for (r, g, b), n in color_counts.items()}
+
+        for seg in ann.get("segments_info", []):
+            sid = seg.get("id")
+            if not sid:                                  # id 0 = nền
+                continue
+            if (seg.get("area") or 0) > real.get(sid, 0):
+                errors.append({"type": "thing_overlap", "target": name})
+                break                                    # 1 ảnh chỉ báo 1 lần
+    return errors
 
 RULES = [
     check_missing_image, check_wrong_hash, check_invalid_class, check_bbox_out_of_bounds, check_duplicate_box,
