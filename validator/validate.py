@@ -286,10 +286,15 @@ RULES = [
 # Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch. 
 CAND_MIN_SEGMENT_PIXELS = 100
 CAND_MIN_OVERLAP_PIXELS = 32
-CAND_MIN_CLASS_OVERLAP = 0.2
-CAND_MIN_MATCH_COVERAGE = 0.25
-CAND_DRIFT_COVERAGE = 0.5
-CAND_NEARBY_SCALE = 0.75
+CAND_MIN_CLASS_OVERLAP = 0.65
+CAND_MIN_DRIFT_OVERLAP = 0.02
+CAND_MIN_MATCH_COVERAGE = 0.35
+CAND_DRIFT_COVERAGE = 0.25
+CAND_DRIFT_MAX_BBOX_IOU = 0.15
+CAND_DRIFT_MIN_CENTER_SCALE = 0.75
+CAND_NEARBY_SCALE = 0.9
+CAND_MERGE_MAX_PAIR_IOU = 0.75
+CAND_MERGE_MIN_CENTER_SCALE = 0.75
 
 def find_candidates(d: Delivery) -> list[dict]:
     """Tạo ứng viên từ detection/panoptic; người xem ảnh quyết định lỗi thật."""
@@ -518,7 +523,7 @@ def find_candidates(d: Delivery) -> list[dict]:
 
                 meaningful_overlap = (
                     overlap >= CAND_MIN_OVERLAP_PIXELS
-                    and segment_coverage >= CAND_MIN_CLASS_OVERLAP
+                    and segment_coverage >= CAND_MIN_DRIFT_OVERLAP
                 )
                 if nearby and meaningful_overlap:
                     same_class_nearby = True
@@ -528,12 +533,16 @@ def find_candidates(d: Delivery) -> list[dict]:
                     nearby
                     and meaningful_overlap
                     and segment_coverage < CAND_DRIFT_COVERAGE
+                    and iou < CAND_DRIFT_MAX_BBOX_IOU
+                    and center_distance >= CAND_DRIFT_MIN_CENTER_SCALE * scale
                 ):
                     add_candidate("bbox_drift", name, {
                         "class_name": segment_name,
                         "box_index": box["index"],
                         "segment_id": segment_id,
                         "segment_coverage": round(segment_coverage, 3),
+                        "bbox_iou": round(iou, 3),
+                        "center_distance_scale": round(center_distance / scale, 3),
                     })
 
             strong_hits = [
@@ -571,7 +580,10 @@ def find_candidates(d: Delivery) -> list[dict]:
                         max(first_width, first_height),
                         max(second_width, second_height),
                     )
-                    if pair_iou < 0.8 and center_distance >= 0.25 * distinct_scale:
+                    if (
+                        pair_iou < CAND_MERGE_MAX_PAIR_IOU
+                        and center_distance >= CAND_MERGE_MIN_CENTER_SCALE * distinct_scale
+                    ):
                         merge_pair = (first, second)
                         break
                 if merge_pair:
