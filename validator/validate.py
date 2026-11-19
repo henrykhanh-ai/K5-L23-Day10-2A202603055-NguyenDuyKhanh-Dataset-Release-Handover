@@ -8,8 +8,8 @@ không mạng, không đọc _private/ hay data_source/.
 
 Phân công:
   A (Khánh)  : khung + missing_image, wrong_hash, invalid_class, bbox_out_of_bounds, duplicate_box
-  B (Loan)   : scene_leak, guideline_mismatch, invalid_category_id, thing_overlap   -> các hàm check_* đang để trống
-  C (Quân)   : find_candidates (đối chiếu detection <-> panoptic)                   -> đang để trống
+  B (Loan)   : scene_leak, guideline_mismatch, invalid_category_id, thing_overlap
+  C (Quân)   : find_candidates (đối chiếu detection <-> panoptic, tạo ứng viên để review)
 """
 
 from __future__ import annotations
@@ -18,6 +18,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import struct
 import sys
 from pathlib import Path
@@ -282,8 +283,318 @@ RULES = [
 # ---------------------------------------------------------------------------
 # Ứng viên lỗi gán nhãn — phần C (Quân)
 # ---------------------------------------------------------------------------
+# Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch.
+CAND_MIN_SEGMENT_PIXELS = 100
+CAND_MIN_OVERLAP_PIXELS = 32
+CAND_MIN_CLASS_OVERLAP = 0.2
+CAND_MIN_MATCH_COVERAGE = 0.25
+CAND_DRIFT_COVERAGE = 0.5
+CAND_NEARBY_SCALE = 0.75
+
+
 def find_candidates(d: Delivery) -> list[dict]:
-    return []   # TODO(C): ghép box <-> segment qua TÊN lớp; lệch lớp/vị trí/số vật -> ứng viên để người xem ảnh
+    """Tạo ứng viên từ detection/panoptic; người xem ảnh quyết định lỗi thật."""
+    import warnings
+
+    import pngutil
+
+    class_names: dict[int, str] = {}
+    with (d.root / "classes.txt").open(encoding="utf-8-sig") as f:
+        for line in f:
+            parts = line.strip().split(maxsplit=1)
+            if len(parts) == 2:
+                try:
+                    class_names[int(parts[0])] = parts[1].strip()
+                except ValueError:
+                    continue
+
+    categories = {
+        category.get("id"): category
+        for category in d.panoptic.get("categories", [])
+        if category.get("id") is not None
+    }
+    image_names = {
+        image.get("id"): Path(image.get("file_name", "")).stem
+        for image in d.panoptic.get("images", [])
+    }
+    annotations_by_name: dict[str, dict] = {}
+    for annotation in d.panoptic.get("annotations", []):
+        name = image_names.get(annotation.get("image_id"))
+        if not name and annotation.get("file_name"):
+            name = Path(annotation["file_name"]).stem
+        if name:
+            annotations_by_name[name] = annotation
+
+    candidates: dict[tuple[str, str], dict] = {}
+
+    def add_candidate(kind: str, name: str, evidence: dict) -> None:
+        key = (kind, name)
+        candidate = candidates.setdefault(
+            key, {"type": kind, "target": name, "evidence": []}
+        )
+        if kind == "class_disagreement":
+            candidate["possible_types"] = ["class_swap", "category_swap"]
+        candidate["evidence"].append(evidence)
+
+    def intersection_area(a: tuple[float, float, float, float],
+                          b: tuple[float, float, float, float]) -> float:
+        return max(0.0, min(a[2], b[2]) - max(a[0], b[0])) * max(
+            0.0, min(a[3], b[3]) - max(a[1], b[1])
+        )
+
+    for name in sorted(d.items):
+        annotation = annotations_by_name.get(name)
+        size = d.image_size(name)
+        mask_path = d.path(name, "mask")
+        if annotation is None or size is None:
+            continue
+        if not mask_path.is_file():
+            warnings.warn(f"Skipping cross-check for {name}: missing mask {mask_path}")
+            continue
+
+        width, height = size
+        mask_width, mask_height, pixels = pngutil.read_rgb(mask_path)
+        if (mask_width, mask_height) != (width, height):
+            raise ValueError(
+                f"Mask/image size mismatch for {name}: "
+                f"{mask_width}x{mask_height} vs {width}x{height}"
+            )
+
+        segment_info = {
+            segment.get("id"): segment
+            for segment in annotation.get("segments_info", [])
+            if segment.get("id") not in (None, 0)
+        }
+        # Index contiguous mask runs once; reuse them for box/segment intersections.
+        pixel_counts: dict[int, int] = {}
+        pixel_bounds: dict[int, list[int]] = {}
+        segment_runs: dict[int, list[tuple[int, int, int]]] = {}
+        for y in range(height):
+            row = y * width * 3
+            run_start = 0
+            run_id = None
+            for x in range(width):
+                offset = row + x * 3
+                segment_id = (
+                    pixels[offset]
+                    + pixels[offset + 1] * 256
+                    + pixels[offset + 2] * 65536
+                )
+                if segment_id != run_id:
+                    if run_id in segment_info:
+                        segment_runs.setdefault(run_id, []).append((y, run_start, x))
+                        run_length = x - run_start
+                        pixel_counts[run_id] = pixel_counts.get(run_id, 0) + run_length
+                        bounds = pixel_bounds.get(run_id)
+                        if bounds is None:
+                            pixel_bounds[run_id] = [run_start, y, x, y + 1]
+                        else:
+                            bounds[0] = min(bounds[0], run_start)
+                            bounds[1] = min(bounds[1], y)
+                            bounds[2] = max(bounds[2], x)
+                            bounds[3] = max(bounds[3], y + 1)
+                    run_start = x
+                    run_id = segment_id
+            if run_id in segment_info:
+                segment_runs.setdefault(run_id, []).append((y, run_start, width))
+                run_length = width - run_start
+                pixel_counts[run_id] = pixel_counts.get(run_id, 0) + run_length
+                bounds = pixel_bounds.get(run_id)
+                if bounds is None:
+                    pixel_bounds[run_id] = [run_start, y, width, y + 1]
+                else:
+                    bounds[0] = min(bounds[0], run_start)
+                    bounds[1] = min(bounds[1], y)
+                    bounds[2] = max(bounds[2], width)
+                    bounds[3] = max(bounds[3], y + 1)
+
+        boxes = []
+        for index, (class_id, center_x, center_y, box_width, box_height) in enumerate(
+            d.boxes(name)
+        ):
+            try:
+                class_name = class_names[int(class_id)]
+            except (ValueError, KeyError):
+                continue
+            if box_width <= 0 or box_height <= 0:
+                continue
+            x1 = max(0.0, (center_x - box_width / 2) * width)
+            y1 = max(0.0, (center_y - box_height / 2) * height)
+            x2 = min(float(width), (center_x + box_width / 2) * width)
+            y2 = min(float(height), (center_y + box_height / 2) * height)
+            if x2 <= x1 or y2 <= y1:
+                continue
+            boxes.append({
+                "index": index,
+                "class_name": class_name,
+                "bounds": (x1, y1, x2, y2),
+            })
+
+        # Count segment pixels in each detection box using the indexed horizontal runs.
+        overlaps: dict[tuple[int, int], int] = {}
+        for box_index, box in enumerate(boxes):
+            x1, y1, x2, y2 = box["bounds"]
+            left, top = max(0, int(x1)), max(0, int(y1))
+            right = min(width, math.ceil(x2))
+            bottom = min(height, math.ceil(y2))
+            for segment_id, runs in segment_runs.items():
+                count = sum(
+                    max(0, min(run_end, right) - max(run_start, left))
+                    for y, run_start, run_end in runs
+                    if top <= y < bottom
+                )
+                if count:
+                    overlaps[(segment_id, box_index)] = count
+
+        for segment_id, segment in sorted(segment_info.items()):
+            category = categories.get(segment.get("category_id"))
+            if not category or not category.get("isthing") or segment.get("iscrowd"):
+                continue
+            actual_area = pixel_counts.get(segment_id, 0)
+            bounds = pixel_bounds.get(segment_id)
+            if actual_area < CAND_MIN_SEGMENT_PIXELS or bounds is None:
+                continue
+
+            segment_name = category.get("name")
+            segment_box = tuple(float(value) for value in bounds)
+            segment_width = segment_box[2] - segment_box[0]
+            segment_height = segment_box[3] - segment_box[1]
+            segment_center = (
+                (segment_box[0] + segment_box[2]) / 2,
+                (segment_box[1] + segment_box[3]) / 2,
+            )
+            hit_boxes = []
+            same_class_nearby = False
+            different_class_hit = False
+
+            for box_index, box in enumerate(boxes):
+                box_bounds = box["bounds"]
+                overlap = overlaps.get((segment_id, box_index), 0)
+                segment_coverage = overlap / actual_area
+                box_area = max(
+                    1.0,
+                    (box_bounds[2] - box_bounds[0]) * (box_bounds[3] - box_bounds[1]),
+                )
+                box_coverage = overlap / box_area
+                iou = intersection_area(segment_box, box_bounds) / max(
+                    1.0,
+                    (segment_width * segment_height)
+                    + (box_bounds[2] - box_bounds[0])
+                    * (box_bounds[3] - box_bounds[1])
+                    - intersection_area(segment_box, box_bounds),
+                )
+                box_center = (
+                    (box_bounds[0] + box_bounds[2]) / 2,
+                    (box_bounds[1] + box_bounds[3]) / 2,
+                )
+                scale = max(
+                    segment_width,
+                    segment_height,
+                    box_bounds[2] - box_bounds[0],
+                    box_bounds[3] - box_bounds[1],
+                    1.0,
+                )
+                center_distance = (
+                    (box_center[0] - segment_center[0]) ** 2
+                    + (box_center[1] - segment_center[1]) ** 2
+                ) ** 0.5
+                nearby = iou >= 0.05 or center_distance <= CAND_NEARBY_SCALE * scale
+
+                if box["class_name"] != segment_name:
+                    if (
+                        overlap >= CAND_MIN_OVERLAP_PIXELS
+                        and segment_coverage >= CAND_MIN_CLASS_OVERLAP
+                        and box_coverage >= CAND_MIN_CLASS_OVERLAP
+                    ):
+                        different_class_hit = True
+                        add_candidate("class_disagreement", name, {
+                            "detection_class": box["class_name"],
+                            "panoptic_class": segment_name,
+                            "box_index": box["index"],
+                            "segment_id": segment_id,
+                            "segment_coverage": round(segment_coverage, 3),
+                            "box_coverage": round(box_coverage, 3),
+                        })
+                    continue
+
+                meaningful_overlap = (
+                    overlap >= CAND_MIN_OVERLAP_PIXELS
+                    and segment_coverage >= CAND_MIN_CLASS_OVERLAP
+                )
+                if nearby and meaningful_overlap:
+                    same_class_nearby = True
+                if overlap >= CAND_MIN_OVERLAP_PIXELS:
+                    hit_boxes.append((box, overlap, segment_coverage, box_coverage))
+                if (
+                    nearby
+                    and meaningful_overlap
+                    and segment_coverage < CAND_DRIFT_COVERAGE
+                ):
+                    add_candidate("bbox_drift", name, {
+                        "class_name": segment_name,
+                        "box_index": box["index"],
+                        "segment_id": segment_id,
+                        "segment_coverage": round(segment_coverage, 3),
+                    })
+
+            strong_hits = [
+                hit for hit in hit_boxes
+                if hit[2] >= CAND_MIN_MATCH_COVERAGE and hit[3] >= 0.1
+            ]
+            merge_pair = None
+            for first_index, first in enumerate(strong_hits):
+                first_bounds = first[0]["bounds"]
+                first_width = first_bounds[2] - first_bounds[0]
+                first_height = first_bounds[3] - first_bounds[1]
+                first_center = (
+                    (first_bounds[0] + first_bounds[2]) / 2,
+                    (first_bounds[1] + first_bounds[3]) / 2,
+                )
+                for second in strong_hits[first_index + 1:]:
+                    second_bounds = second[0]["bounds"]
+                    second_width = second_bounds[2] - second_bounds[0]
+                    second_height = second_bounds[3] - second_bounds[1]
+                    second_center = (
+                        (second_bounds[0] + second_bounds[2]) / 2,
+                        (second_bounds[1] + second_bounds[3]) / 2,
+                    )
+                    center_distance = (
+                        (first_center[0] - second_center[0]) ** 2
+                        + (first_center[1] - second_center[1]) ** 2
+                    ) ** 0.5
+                    pair_iou = intersection_area(first_bounds, second_bounds) / max(
+                        1.0,
+                        first_width * first_height
+                        + second_width * second_height
+                        - intersection_area(first_bounds, second_bounds),
+                    )
+                    distinct_scale = min(
+                        max(first_width, first_height),
+                        max(second_width, second_height),
+                    )
+                    if pair_iou < 0.8 and center_distance >= 0.25 * distinct_scale:
+                        merge_pair = (first, second)
+                        break
+                if merge_pair:
+                    break
+
+            if merge_pair:
+                add_candidate("instance_merge", name, {
+                    "class_name": segment_name,
+                    "segment_id": segment_id,
+                    "box_indices": [hit[0]["index"] for hit in merge_pair],
+                })
+            elif not strong_hits and not same_class_nearby and not different_class_hit:
+                add_candidate("missing_box", name, {
+                    "class_name": segment_name,
+                    "segment_id": segment_id,
+                    "segment_pixels": actual_area,
+                })
+
+    return [
+        candidates[key]
+        for key in sorted(candidates)
+    ]
 
 
 # ---------------------------------------------------------------------------
