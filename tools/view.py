@@ -400,16 +400,16 @@ def main():
         return '<div class="e">' + "".join(parts) + "</div>" if parts else ""
 
     rows = []
-    for stem, items, notes, name in cards:
+    for k, (stem, items, notes, name) in enumerate(cards, 1):
         meta = " + ".join(t for t, _ in items if t)
         ev = evidence_html(items)
         warn = f'<div class="w">{html.escape("; ".join(notes))}</div>' if notes else ""
-        rows.append(f'<section><h3>{html.escape(stem)} <small>{html.escape(meta)}</small></h3>{ev}{warn}'
+        rows.append(f'<section><h3><span class="k">{k}/{len(cards)}</span> {html.escape(stem)} <small>{html.escape(meta)}</small></h3>{ev}{warn}'
                     f'<img src="{html.escape(name)}"></section>')
     (out / "index.html").write_text(
         '<!doctype html><meta charset="utf-8"><title>Xem ảnh</title>'
         '<style>body{background:#181818;color:#eee;font:15px sans-serif;margin:16px}'
-        'img{max-width:100%}.e{margin:6px 0 10px}.t{margin-top:6px}.chip{background:#3a3320;color:#ffd37a;border-radius:4px;padding:1px 8px;font-weight:600}.n{color:#999;font-size:13px}ul.ev{margin:4px 0 4px 18px;padding:0;color:#e6e6e6;font-size:14px;line-height:1.5}summary{color:#aaa;cursor:pointer;margin-left:18px;font-size:13px}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
+        'img{max-width:100%}.k{color:#7aa2ff;margin-right:6px}.e{margin:6px 0 10px}.t{margin-top:6px}.chip{background:#3a3320;color:#ffd37a;border-radius:4px;padding:1px 8px;font-weight:600}.n{color:#999;font-size:13px}ul.ev{margin:4px 0 4px 18px;padding:0;color:#e6e6e6;font-size:14px;line-height:1.5}summary{color:#aaa;cursor:pointer;margin-left:18px;font-size:13px}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
         f'<h2>{len(cards)} ảnh</h2>' + "".join(rows), encoding="utf-8")
     page = (out / "index.html").resolve()
     print(f"\nXong {len(cards)} ảnh. Mở {page}")
