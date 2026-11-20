@@ -79,3 +79,31 @@ mục delivery**, không đọc `_private/`. Mình yêu cầu chạy được tr
   rồi mới kết luận; một số chỗ lệch là sai khác tự nhiên của COCO (đa giác thô, bị
   che), không phải lỗi gài.
 - Đã gửi gói test cho cả nhóm chạy trên Windows (kết quả: chờ báo cáo từng bạn).
+
+---
+
+# Dùng AI — phần C (Việt Quân): ngưỡng `find_candidates`
+
+## 1. Nhờ AI làm gì
+
+Nhờ AI (Claude Code) dò lại bộ ngưỡng trong `find_candidates` (đối chiếu detection ↔
+panoptic) sau khi bản đầu đặt `CAND_MIN_CLASS_OVERLAP=0.65` làm hàng đợi lô sạch còn 7
+ứng viên — thấp bất thường, nguy cơ bỏ sót lỗi.
+
+## 2. AI sai ở đâu — và nhóm sửa
+
+Lần đầu AI chọn ngưỡng bằng cách **đo recall trên `_private/truth.json`** của các seed
+luyện tập (ra con số "recall 24/29") rồi viết vào comment code và commit `0c2671e`.
+**Đây là dùng đáp án gián tiếp — RULES cấm.** Nhóm phát hiện khi soát lại commit, đã
+sửa ở commit `3431bfe`: bỏ ràng buộc suy từ đáp án (`CAND_DRIFT_MAX_CENTER_SCALE`),
+viết lại comment, và chọn/giải thích ngưỡng **chỉ bằng nhiễu đo trên lô sạch + nguyên
+tắc hình học**.
+
+## 3. Mình kiểm tra thế nào
+
+- `validator/validate.py` **không đọc `_private`** (kiểm bằng đọc code): đạt.
+- Đo **số ứng viên trên lô sạch (66)** — hợp lệ vì lô sạch không có đáp án.
+- Verdict cuối do **người xem ảnh** quyết, không để AI kết luận thay.
+
+Rút ra: dùng `_private` để **tự kiểm tra** thì được (như `tests/`), nhưng **tuyển ngưỡng
+theo đáp án** là gian lận — phải chọn bằng lô sạch + kết quả review.
