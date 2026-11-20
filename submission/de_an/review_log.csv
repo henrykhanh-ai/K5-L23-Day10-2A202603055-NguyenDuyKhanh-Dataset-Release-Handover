@@ -1,0 +1,248 @@
+image,type,verdict,note,reviewer
+img_0007,class_disagreement,rejected,nhiều thuyền đậu sát nhau và người đi bộ đông ở xa bờ sông nên không có box nào ôm khít một vật rõ,khanh
+img_0007,instance_merge,rejected,nhiều thuyền đậu sát nhau và người đi bộ đông ở xa bờ sông nên không có box nào ôm khít một vật rõ,khanh
+img_0007,bbox_drift,rejected,nhiều thuyền đậu sát nhau và người đi bộ đông ở xa bờ sông nên không có box nào ôm khít một vật rõ,khanh
+img_0020,class_disagreement,rejected,đĩa thịt bò có cà rốt táo tây và súp lơ xếp chồng lên nhau nên box và mask không tách được rõ từng món,khanh
+img_0020,instance_merge,rejected,đĩa thịt bò có cà rốt táo tây và súp lơ xếp chồng lên nhau nên box và mask không tách được rõ từng món,khanh
+img_0020,bbox_drift,rejected,đĩa thịt bò có cà rốt táo tây và súp lơ xếp chồng lên nhau nên box và mask không tách được rõ từng món,khanh
+img_0038,class_disagreement,rejected,đoàn tàu và các xe đậu xa nhiều xe chồng nhau box 4 và box 5 cùng ôm một chiếc xe nên không kết luận được,khanh
+img_0038,instance_merge,rejected,đoàn tàu và các xe đậu xa nhiều xe chồng nhau box 4 và box 5 cùng ôm một chiếc xe nên không kết luận được,khanh
+img_0038,bbox_drift,rejected,đoàn tàu và các xe đậu xa nhiều xe chồng nhau box 4 và box 5 cùng ôm một chiếc xe nên không kết luận được,khanh
+img_0072,class_disagreement,rejected,đồng hồ tháp xe buýt và ô tô ở mép ảnh bị cắt và các xe chồng nhau nên box không đáng tin,khanh
+img_0072,instance_merge,rejected,đồng hồ tháp xe buýt và ô tô ở mép ảnh bị cắt và các xe chồng nhau nên box không đáng tin,khanh
+img_0072,bbox_drift,rejected,đồng hồ tháp xe buýt và ô tô ở mép ảnh bị cắt và các xe chồng nhau nên box không đáng tin,khanh
+img_0086,class_disagreement,rejected,bát mì thìa nĩa và tách cà phê đặt sát nhau trên bàn box 10 spoon nằm trong tách nên mask không tách rõ,khanh
+img_0086,bbox_drift,rejected,bát mì thìa nĩa và tách cà phê đặt sát nhau trên bàn box 10 spoon nằm trong tách nên mask không tách rõ,khanh
+img_0098,class_disagreement,rejected,ảnh ghép bốn khung có nhóm người đứng sát nhau người bên trái bị cắt mép và box backpack chồng lên người,khanh
+img_0098,bbox_drift,rejected,ảnh ghép bốn khung có nhóm người đứng sát nhau người bên trái bị cắt mép và box backpack chồng lên người,khanh
+img_0130,class_disagreement,rejected,con voi bị người phụ nữ che một phần và bị cắt ở mép phải và đáy ảnh nên không đạt tiêu chí vật rõ,khanh
+img_0142,class_disagreement,rejected,người trượt ván và xe đạp chồng lên nhau và đám người xa bên phải đông nên box khó đánh giá,khanh
+img_0142,instance_merge,rejected,người trượt ván và xe đạp chồng lên nhau và đám người xa bên phải đông nên box khó đánh giá,khanh
+img_0142,bbox_drift,rejected,người trượt ván và xe đạp chồng lên nhau và đám người xa bên phải đông nên box khó đánh giá,khanh
+img_0159,class_disagreement,rejected,ghế đỏ mèo và cụm sách nhỏ xếp chồng nhau box 9 bed bao cả ghế lẫn mèo nên không khớp một vật,khanh
+img_0159,instance_merge,rejected,ghế đỏ mèo và cụm sách nhỏ xếp chồng nhau box 9 bed bao cả ghế lẫn mèo nên không khớp một vật,khanh
+img_0159,bbox_drift,rejected,ghế đỏ mèo và cụm sách nhỏ xếp chồng nhau box 9 bed bao cả ghế lẫn mèo nên không khớp một vật,khanh
+img_0175,class_disagreement,rejected,khán đài đông người ngồi trên ghế; box 2 15 22 không ôm khít người mà ôm ghế bị người ngồi che nên nhãn chair đúng,khanh
+img_0175,instance_merge,rejected,khán đài đông người ngồi trên ghế; box 2 15 22 không ôm khít người mà ôm ghế bị người ngồi che nên nhãn chair đúng,khanh
+img_0175,bbox_drift,rejected,khán đài đông người ngồi trên ghế; box 2 15 22 không ôm khít người mà ôm ghế bị người ngồi che nên nhãn chair đúng,khanh
+img_0190,class_disagreement,rejected,sofa bàn ăn và chậu cây nằm sát nhau box 2 couch bao nhiều vật cùng lúc và các remote rất nhỏ,khanh
+img_0190,instance_merge,rejected,sofa bàn ăn và chậu cây nằm sát nhau box 2 couch bao nhiều vật cùng lúc và các remote rất nhỏ,khanh
+img_0190,bbox_drift,rejected,sofa bàn ăn và chậu cây nằm sát nhau box 2 couch bao nhiều vật cùng lúc và các remote rất nhỏ,khanh
+img_0229,class_disagreement,rejected,ba thiết bị điện tử xếp chồng lên nhau trên laptop nên các vật che khuất lẫn nhau không tách được,khanh
+img_0229,instance_merge,rejected,ba thiết bị điện tử xếp chồng lên nhau trên laptop nên các vật che khuất lẫn nhau không tách được,khanh
+img_0229,bbox_drift,rejected,ba thiết bị điện tử xếp chồng lên nhau trên laptop nên các vật che khuất lẫn nhau không tách được,khanh
+img_0035,class_disagreement,rejected,bàn và bánh kem bị tay và dao che nên box dining table bị cắt mép và chồng lên nhiều vật,khanh
+img_0148,class_disagreement,rejected,phòng khách có sofa bàn kính và TV box 2 chair bao cả sofa và bàn còn người trên TV là hình chiếu nên không rõ,khanh
+img_0148,bbox_drift,rejected,phòng khách có sofa bàn kính và TV box 2 chair bao cả sofa và bàn còn người trên TV là hình chiếu nên không rõ,khanh
+img_0182,class_disagreement,rejected,mèo đứng trước TV box 1 cat khớp với mask cat còn mask tv khớp box 0 nên không có lỗi lớp rõ ràng,khanh
+img_0205,class_disagreement,rejected,mèo nằm đè lên laptop và cốc sách chồng lên nhau box 0 cat khớp mask cat nên không có lỗi rõ ràng,khanh
+img_0237,class_disagreement,rejected,mèo nằm trên vali và hai túi xách chồng lên nhau box 2 và box 3 cùng ôm một túi nên khó xác định,khanh
+img_0237,bbox_drift,rejected,mèo nằm trên vali và hai túi xách chồng lên nhau box 2 và box 3 cùng ôm một túi nên khó xác định,khanh
+img_0092,class_disagreement,rejected,hai người lướt sóng nhỏ xa trên bãi biển cùng đám người rất nhỏ ở xa nên box và mask không đủ rõ,khanh
+img_0006,instance_merge,rejected,ba người đứng gần nhau có gậy bóng chày và mask người tách riêng từng người nên không có merge rõ,khanh
+img_0006,bbox_drift,rejected,ba người đứng gần nhau có gậy bóng chày và mask người tách riêng từng người nên không có merge rõ,khanh
+img_0028,instance_merge,rejected,xe máy là vật rõ nhưng xe ô tô đậu xa thành cụm chồng nhau và xe vàng bên phải bị cắt mép nên loại,khanh
+img_0028,bbox_drift,rejected,xe máy là vật rõ nhưng xe ô tô đậu xa thành cụm chồng nhau và xe vàng bên phải bị cắt mép nên loại,khanh
+img_0054,instance_merge,rejected,các ly rượu vang chồng lấp nhau và bàn tay người che khuất nên mask không tách riêng từng ly,khanh
+img_0054,bbox_drift,rejected,các ly rượu vang chồng lấp nhau và bàn tay người che khuất nên mask không tách riêng từng ly,khanh
+img_0097,instance_merge,rejected,hai con cừu đứng sát nhau mask cừu trắng và cừu nâu tách riêng và con cừu dưới cùng bị cắt đáy ảnh,khanh
+img_0097,bbox_drift,rejected,hai con cừu đứng sát nhau mask cừu trắng và cừu nâu tách riêng và con cừu dưới cùng bị cắt đáy ảnh,khanh
+img_0154,instance_merge,rejected,nhóm người trượt tuyết nhỏ đứng sát hàng rào và xa trên sườn đồi nên box và mask không đủ rõ,khanh
+img_0154,bbox_drift,rejected,nhóm người trượt tuyết nhỏ đứng sát hàng rào và xa trên sườn đồi nên box và mask không đủ rõ,khanh
+img_0222,instance_merge,rejected,cầu thủ bóng chày trọng tài và khán giả đông ở nền nên mask người gộp không rõ ràng,khanh
+img_0222,bbox_drift,rejected,cầu thủ bóng chày trọng tài và khán giả đông ở nền nên mask người gộp không rõ ràng,khanh
+img_0163,instance_merge,rejected,bồn rửa tay nhỏ trong gương phản chiếu và bồn rửa lớn ở mép phải bị cắt nên vật quá nhỏ,khanh
+img_0163,bbox_drift,rejected,bồn rửa tay nhỏ trong gương phản chiếu và bồn rửa lớn ở mép phải bị cắt nên vật quá nhỏ,khanh
+img_0117,instance_merge,rejected,đám người đông ở phía sau và trẻ em đứng trên ván trượt chồng lên nhau nên box và mask khó đánh giá,khanh
+img_0117,bbox_drift,rejected,đám người đông ở phía sau và trẻ em đứng trên ván trượt chồng lên nhau nên box và mask khó đánh giá,khanh
+img_0220,instance_merge,rejected,bánh pizza có nhiều miếng súp lơ xanh chồng lên nhau và mask bông súp lơ dính liền nên không tách được,khanh
+img_0220,bbox_drift,rejected,bánh pizza có nhiều miếng súp lơ xanh chồng lên nhau và mask bông súp lơ dính liền nên không tách được,khanh
+img_0090,bbox_drift,rejected,người đàn ông cầm remote và kệ sách phía sau nhiều box khớp với mask nên không có lỗi rõ ràng,khanh
+img_0228,bbox_drift,rejected,hai con ngựa vằn một con đứng và một con nằm bị che chân nên box 1 chồng lên con đứng và khó đánh giá,khanh
+img_0039,bbox_drift,rejected,file ảnh img_0039 là ảnh thông báo thiếu ảnh không có ảnh thật nên không đánh giá được và đã báo missing_image,khanh
+img_0161,bbox_drift,rejected,bánh kem và bánh nướng màu nâu xếp sát nhau trên giấy bạc hai box cùng ôm bánh nên chồng lên nhau,khanh
+img_0242,bbox_drift,rejected,người đứng giữa tay dang rộng và người ngồi trên ván lướt sóng chồng lên nhau nên khó xác định,khanh
+img_0176,bbox_drift,rejected,người trượt tuyết đeo ba lô và ván trượt nằm sát nhau hai box ba lô chồng lên nhau ở lưng,khanh
+img_0085,bbox_drift,rejected,voi chở người trong ánh ngược sáng và nhiều người nhỏ chồng lên voi ở xa nên box không rõ ràng,khanh
+img_0012,class_disagreement,rejected,hai đĩa pizza nằm chồng lên bàn ăn và box 4 pizza khớp với đĩa pizza nên không có lỗi lớp rõ,loan
+img_0012,instance_merge,rejected,hai đĩa pizza nằm chồng lên bàn ăn và box 4 pizza khớp với đĩa pizza nên không có lỗi lớp rõ,loan
+img_0012,bbox_drift,rejected,hai đĩa pizza nằm chồng lên bàn ăn và box 4 pizza khớp với đĩa pizza nên không có lỗi lớp rõ,loan
+img_0031,class_disagreement,rejected,box 0 pizza bao gần cả khung ảnh và miếng pizza bị cắt ở mép nên không ôm khít một vật,loan
+img_0046,class_disagreement,rejected,sân ga đông người cầm hành lý và balô chồng nhau nhiều người nhỏ ở xa nên mask và box không rõ,loan
+img_0046,instance_merge,rejected,sân ga đông người cầm hành lý và balô chồng nhau nhiều người nhỏ ở xa nên mask và box không rõ,loan
+img_0046,bbox_drift,rejected,sân ga đông người cầm hành lý và balô chồng nhau nhiều người nhỏ ở xa nên mask và box không rõ,loan
+img_0076,class_swap,confirmed,box 0 ôm gần trọn xe buýt trường màu vàng bị cắt mép trái ghi car là sai mask ghi bus đúng,loan
+img_0076,instance_merge,rejected,xe buýt trường màu vàng bị cắt mép trái box 0 gán car sai nhưng vật bị cắt nên không đạt tiêu chí,loan
+img_0076,bbox_drift,rejected,xe buýt trường màu vàng bị cắt mép trái box 0 gán car sai nhưng vật bị cắt nên không đạt tiêu chí,loan
+img_0087,class_disagreement,rejected,người đạp xe và xe đạp chồng lên nhau box 0 bicycle phủ cả người nên không tách được vật,loan
+img_0087,instance_merge,rejected,người đạp xe và xe đạp chồng lên nhau box 0 bicycle phủ cả người nên không tách được vật,loan
+img_0087,bbox_drift,rejected,người đạp xe và xe đạp chồng lên nhau box 0 bicycle phủ cả người nên không tách được vật,loan
+img_0101,class_disagreement,rejected,knife box 2 khớp với mask knife và box 3 spoon nằm cạnh bát nên lớp không sai rõ ràng,loan
+img_0101,instance_merge,rejected,knife box 2 khớp với mask knife và box 3 spoon nằm cạnh bát nên lớp không sai rõ ràng,loan
+img_0101,bbox_drift,rejected,knife box 2 khớp với mask knife và box 3 spoon nằm cạnh bát nên lớp không sai rõ ràng,loan
+img_0133,class_disagreement,rejected,box 6 backpack phủ thân người đàn ông và balô nằm sau người nên bị che nên không đạt tiêu chí,loan
+img_0133,bbox_drift,rejected,box 6 backpack phủ thân người đàn ông và balô nằm sau người nên bị che nên không đạt tiêu chí,loan
+img_0143,class_disagreement,rejected,ghế box 0 nằm sau bé và người đàn ông ngồi xa ở góc trái nên các mask và box không rõ ràng,loan
+img_0143,instance_merge,rejected,ghế box 0 nằm sau bé và người đàn ông ngồi xa ở góc trái nên các mask và box không rõ ràng,loan
+img_0143,bbox_drift,rejected,ghế box 0 nằm sau bé và người đàn ông ngồi xa ở góc trái nên các mask và box không rõ ràng,loan
+img_0160,class_disagreement,rejected,box 1 sink phủ cả bồn rửa và mask sink khớp với box nên không có lỗi lớp và mèo đã khớp box 0,loan
+img_0177,class_disagreement,rejected,box 2 oven phủ cả bếp và mặt bàn còn mask oven khớp box nên không có lỗi lớp rõ ràng,loan
+img_0191,class_disagreement,rejected,box 4 backpack khớp mask backpack còn người nền box 3 bị người phụ nữ che một phần nên loại,loan
+img_0191,bbox_drift,rejected,box 4 backpack khớp mask backpack còn người nền box 3 bị người phụ nữ che một phần nên loại,loan
+img_0238,class_disagreement,rejected,sân bay đông người và hành lý chồng nhau nhiều box nhỏ ở nền nên không có cặp đúng rõ ràng,loan
+img_0238,instance_merge,rejected,sân bay đông người và hành lý chồng nhau nhiều box nhỏ ở nền nên không có cặp đúng rõ ràng,loan
+img_0238,bbox_drift,rejected,sân bay đông người và hành lý chồng nhau nhiều box nhỏ ở nền nên không có cặp đúng rõ ràng,loan
+img_0066,class_disagreement,rejected,box spoon khớp mask thìa cam và mask bowl khớp tô nên không có lỗi lớp rõ ràng,loan
+img_0152,class_disagreement,rejected,box 0 couch phủ gần như cả khung ảnh và bé trai khớp mask person nên không có lỗi rõ,loan
+img_0183,class_disagreement,rejected,mask person khớp người đàn ông và mask book khớp cuốn sách mở nên không có hoán đổi lớp,loan
+img_0217,class_disagreement,rejected,bếp có nhiều người bát rau và thìa chồng nhau ở nền nên các box và mask không tách được rõ,loan
+img_0217,instance_merge,rejected,bếp có nhiều người bát rau và thìa chồng nhau ở nền nên các box và mask không tách được rõ,loan
+img_0217,bbox_drift,rejected,bếp có nhiều người bát rau và thìa chồng nhau ở nền nên các box và mask không tách được rõ,loan
+img_0243,class_disagreement,rejected,ván trượt tuyết box 2 khớp mask snowboard và người sau ba lô nhỏ ở xa nên không đạt tiêu chí,loan
+img_0121,class_disagreement,rejected,box carrot và broccoli khớp với các miếng trong hộp cơm và box bowl khớp với hộp nên không lỗi rõ,loan
+img_0008,instance_merge,rejected,box bus khớp mask xe buýt đỏ và biển stop sign chỉ là vật nhỏ bị hai box chồng lên nhau,loan
+img_0008,bbox_drift,rejected,box bus khớp mask xe buýt đỏ và biển stop sign chỉ là vật nhỏ bị hai box chồng lên nhau,loan
+img_0042,instance_merge,rejected,hai người đàn ông có mask riêng và bàn tay của người bên trái vươn sang nên không có merge rõ ràng,loan
+img_0042,bbox_drift,rejected,hai người đàn ông có mask riêng và bàn tay của người bên trái vươn sang nên không có merge rõ ràng,loan
+img_0064,instance_merge,rejected,người và máy bay ở nền nhỏ và đông còn xe UN và máy bay bị cắt mép nên không đủ rõ,loan
+img_0064,bbox_drift,rejected,người và máy bay ở nền nhỏ và đông còn xe UN và máy bay bị cắt mép nên không đủ rõ,loan
+img_0102,instance_merge,rejected,ba cầu thủ đứng và ngồi chồng lên nhau mask người ngồi lan sang vùng người đứng nên không tách rõ,loan
+img_0102,bbox_drift,rejected,ba cầu thủ đứng và ngồi chồng lên nhau mask người ngồi lan sang vùng người đứng nên không tách rõ,loan
+img_0169,instance_merge,rejected,hai ván lướt fondant có mask riêng khớp box 0 và box 2 còn cake box 1 bao cả bánh nên không sai lớp,loan
+img_0169,bbox_drift,rejected,hai ván lướt fondant có mask riêng khớp box 0 và box 2 còn cake box 1 bao cả bánh nên không sai lớp,loan
+img_0060,instance_merge,rejected,box bottle và tie khớp mask của chúng còn người nhỏ ở mép phải chồng lên nhau nên không đạt tiêu chí,loan
+img_0060,bbox_drift,rejected,box bottle và tie khớp mask của chúng còn người nhỏ ở mép phải chồng lên nhau nên không đạt tiêu chí,loan
+img_0210,instance_merge,rejected,voi và người phụ nữ ở mép trái khớp box còn người nhỏ phía sau chồng lên hàng rào nên loại,loan
+img_0210,bbox_drift,rejected,voi và người phụ nữ ở mép trái khớp box còn người nhỏ phía sau chồng lên hàng rào nên loại,loan
+img_0207,instance_merge,rejected,đĩa mì xào có bông súp lơ chồng lên nhau rất nhiều box và mask chồng nhau nên không kết luận được,loan
+img_0207,bbox_drift,rejected,đĩa mì xào có bông súp lơ chồng lên nhau rất nhiều box và mask chồng nhau nên không kết luận được,loan
+img_0051,instance_merge,rejected,đàn cừu xa nhiều con sát nhau nên các box và mask nhỏ chồng lên nhau khó đánh giá,loan
+img_0051,bbox_drift,rejected,đàn cừu xa nhiều con sát nhau nên các box và mask nhỏ chồng lên nhau khó đánh giá,loan
+img_0110,bbox_drift,rejected,box stop sign khớp với biển stop và xe ô tô xa trong phố tối chỉ là vật nhỏ nên không đạt tiêu chí,loan
+img_0019,bbox_drift,rejected,tàu đầu đoàn bị cắt mép dưới và tàu phía sau bị che một phần nên hai box train không đạt tiêu chí,loan
+img_0047,bbox_drift,rejected,đồng hồ tháp box 0 clock khớp mask còn người ở đáy ảnh là đám đông nhỏ xa nên không có lỗi rõ,loan
+img_0192,bbox_drift,rejected,đàn gấu bông trong cửa hàng chồng lên nhau và gấu box 1 bị che một phần nên không đạt tiêu chí,loan
+img_0002,bbox_drift,rejected,box 3 person khớp mask cậu bé đứng còn mẹ và em bé chồng lên nhau trong box 2 và box 7 nên loại,loan
+img_0059,bbox_drift,rejected,xe buýt xanh và đỏ chồng lên nhau xe đỏ bị xe xanh che một phần nên box 1 và box 0 không rõ lỗi,loan
+img_0015,class_disagreement,rejected,box 2 hot dog và mask sandwich khớp cùng một ổ bánh nên không có lỗi lớp rõ ràng,quan
+img_0015,bbox_drift,rejected,box 2 hot dog và mask sandwich khớp cùng một ổ bánh nên không có lỗi lớp rõ ràng,quan
+img_0033,class_disagreement,rejected,box chair phủ cả thân bé trai và ghế còn các box donut chồng nhau trên đĩa nên loại,quan
+img_0033,bbox_drift,rejected,box chair phủ cả thân bé trai và ghế còn các box donut chồng nhau trên đĩa nên loại,quan
+img_0050,class_disagreement,rejected,box dining table bao cả khung ảnh và các box broccoli nhỏ nằm giữa sợi mì nên không đủ rõ,quan
+img_0050,instance_merge,rejected,box dining table bao cả khung ảnh và các box broccoli nhỏ nằm giữa sợi mì nên không đủ rõ,quan
+img_0050,bbox_drift,rejected,box dining table bao cả khung ảnh và các box broccoli nhỏ nằm giữa sợi mì nên không đủ rõ,quan
+img_0078,class_disagreement,rejected,người và xe máy ba bánh có mask khớp box ngồi trên xe nên không có lỗi lớp và xe bị vướng,quan
+img_0091,class_disagreement,rejected,ly rượu dưới cùng bị cắt đáy ảnh và cô dâu chú rể có mask riêng nên không đạt tiêu chí,quan
+img_0091,instance_merge,rejected,ly rượu dưới cùng bị cắt đáy ảnh và cô dâu chú rể có mask riêng nên không đạt tiêu chí,quan
+img_0091,bbox_drift,rejected,ly rượu dưới cùng bị cắt đáy ảnh và cô dâu chú rể có mask riêng nên không đạt tiêu chí,quan
+img_0106,class_disagreement,rejected,phòng họp có rất nhiều box chồng lấp người sách bàn ăn và pizza nên không kết luận được,quan
+img_0106,instance_merge,rejected,phòng họp có rất nhiều box chồng lấp người sách bàn ăn và pizza nên không kết luận được,quan
+img_0106,bbox_drift,rejected,phòng họp có rất nhiều box chồng lấp người sách bàn ăn và pizza nên không kết luận được,quan
+img_0134,class_disagreement,rejected,đĩa bữa sáng có dĩa bạc nằm dưới trái dâu và khoai nên box fork khó tách rõ với vật xung quanh,quan
+img_0147,class_disagreement,rejected,box handbag bao cả bên người phụ nữ và các người đứng sát nhau có mask chồng nhau nên loại,quan
+img_0147,instance_merge,rejected,box handbag bao cả bên người phụ nữ và các người đứng sát nhau có mask chồng nhau nên loại,quan
+img_0147,bbox_drift,rejected,box handbag bao cả bên người phụ nữ và các người đứng sát nhau có mask chồng nhau nên loại,quan
+img_0162,class_disagreement,rejected,vận động viên trượt ván và xe đạp nhỏ xa nằm chồng lên nhau nhiều box và ảnh ghép xung quanh,quan
+img_0162,bbox_drift,rejected,vận động viên trượt ván và xe đạp nhỏ xa nằm chồng lên nhau nhiều box và ảnh ghép xung quanh,quan
+img_0180,class_disagreement,rejected,bình gốm bên phải vừa giống cốc vừa giống bình nên không chắc lớp và các box chồng nhau,quan
+img_0180,bbox_drift,rejected,bình gốm bên phải vừa giống cốc vừa giống bình nên không chắc lớp và các box chồng nhau,quan
+img_0204,class_disagreement,rejected,box chair bao cả người nhặt bóng và ghế dưới người nên hai vật chồng nhau không đạt tiêu chí,quan
+img_0249,class_disagreement,rejected,xe điện ray bị xe ô tô che một phần và cột đèn chắn nên không chắc train hay bus,quan
+img_0068,class_disagreement,rejected,bàn ăn có đĩa bát cốc và dao dĩa chồng lên nhau nhiều box không khớp rõ một vật nào,quan
+img_0068,bbox_drift,rejected,bàn ăn có đĩa bát cốc và dao dĩa chồng lên nhau nhiều box không khớp rõ một vật nào,quan
+img_0168,class_disagreement,rejected,các chai nhỏ trên bàn bị chồng lấp và ghế box 1 đè lên người đàn ông ngồi nên không đạt tiêu chí,quan
+img_0168,instance_merge,rejected,các chai nhỏ trên bàn bị chồng lấp và ghế box 1 đè lên người đàn ông ngồi nên không đạt tiêu chí,quan
+img_0168,bbox_drift,rejected,các chai nhỏ trên bàn bị chồng lấp và ghế box 1 đè lên người đàn ông ngồi nên không đạt tiêu chí,quan
+img_0198,class_disagreement,rejected,box chair bao cả con mèo và ghế sofa mèo nằm trước ghế nên hai vật chồng nhau không tách được,quan
+img_0198,bbox_drift,rejected,box chair bao cả con mèo và ghế sofa mèo nằm trước ghế nên hai vật chồng nhau không tách được,quan
+img_0232,class_disagreement,rejected,hai nài ngựa và ngựa chạy sát nhau cùng bị chồng lấp và con ngựa cuối bị cắt mép phải,quan
+img_0232,bbox_drift,rejected,hai nài ngựa và ngựa chạy sát nhau cùng bị chồng lấp và con ngựa cuối bị cắt mép phải,quan
+img_0056,class_disagreement,rejected,ngựa đang vào xe tải và hai người dắt chồng lên nhau box truck bao cả người nên không rõ,quan
+img_0056,bbox_drift,rejected,ngựa đang vào xe tải và hai người dắt chồng lên nhau box truck bao cả người nên không rõ,quan
+img_0188,class_disagreement,rejected,box bench phủ cả người lớn ngồi và bé gái ngồi trên ghế còn xe và túi xách chồng lên nhau,quan
+img_0188,bbox_drift,rejected,box bench phủ cả người lớn ngồi và bé gái ngồi trên ghế còn xe và túi xách chồng lên nhau,quan
+img_0009,instance_merge,rejected,hươu cao cổ đứng giữa có box khớp mask nhưng hai con phía sau chồng nhau và bị cắt mép phải,quan
+img_0009,bbox_drift,rejected,hươu cao cổ đứng giữa có box khớp mask nhưng hai con phía sau chồng nhau và bị cắt mép phải,quan
+img_0043,instance_merge,rejected,ngựa vằn đứng sát nhau và nhóm nhỏ bên trái có box lồng nhau nên khó xác định vật riêng,quan
+img_0043,bbox_drift,rejected,ngựa vằn đứng sát nhau và nhóm nhỏ bên trái có box lồng nhau nên khó xác định vật riêng,quan
+img_0077,instance_merge,rejected,bồn rửa được chia thành hai box một box chỉ phủ mép trên và một box phủ phần bồn nên không phải box trùng và không đạt,quan
+img_0077,bbox_drift,rejected,bồn rửa được chia thành hai box một box chỉ phủ mép trên và một box phủ phần bồn nên không phải box trùng và không đạt,quan
+img_0103,instance_merge,rejected,box person số 5 bao gần cả khung ảnh và người đàn ông đứng sau bị che một phần nên loại,quan
+img_0103,bbox_drift,rejected,box person số 5 bao gần cả khung ảnh và người đàn ông đứng sau bị che một phần nên loại,quan
+img_0173,instance_merge,rejected,sân bóng chày có khán giả đông ở tiền cảnh và đầu người chồng lên nhau rất nhiều nên loại,quan
+img_0173,bbox_drift,rejected,sân bóng chày có khán giả đông ở tiền cảnh và đầu người chồng lên nhau rất nhiều nên loại,quan
+img_0071,instance_merge,rejected,ba con ngựa vằn đứng sát nhau đầu chồng lên nhau và các box chéo nhau nên không đạt tiêu chí,quan
+img_0071,bbox_drift,rejected,ba con ngựa vằn đứng sát nhau đầu chồng lên nhau và các box chéo nhau nên không đạt tiêu chí,quan
+img_0218,instance_merge,rejected,xe ô tô bạc có box và mask khớp nhau còn xe wagon phía sau có mask riêng nên không có merge,quan
+img_0218,bbox_drift,rejected,xe ô tô bạc có box và mask khớp nhau còn xe wagon phía sau có mask riêng nên không có merge,quan
+img_0226,instance_merge,rejected,quán ăn có nhiều người và cốc chồng lên nhau bàn ăn bị che và các box tách không rõ ràng,quan
+img_0226,bbox_drift,rejected,quán ăn có nhiều người và cốc chồng lên nhau bàn ăn bị che và các box tách không rõ ràng,quan
+img_0048,instance_merge,rejected,nướng xúc xích có rất nhiều xúc xích chồng lên nhau nên mỗi box hot dog đều bị chồng lấp,quan
+img_0048,bbox_drift,rejected,nướng xúc xích có rất nhiều xúc xích chồng lên nhau nên mỗi box hot dog đều bị chồng lấp,quan
+img_0202,bbox_drift,rejected,con voi con đứng trước voi lớn box chồng lên nhau và một phần bị bụi cây che nên không đạt,quan
+img_0022,bbox_drift,rejected,hai con chim đậu sát trên cành box khớp với mỗi con nhưng chồng lên nhau và sát mép,quan
+img_0109,bbox_drift,rejected,box person trường hợp đứng sát mép phải là người mờ bị cắt nên không đạt tiêu chí,quan
+img_0197,bbox_drift,rejected,người đàn ông và phụ nữ ngồi sát nhau trên ghế và ghế dài bị che một phần nên không tách rõ,quan
+img_0053,bbox_drift,rejected,box toilet khớp mask còn người ở mép phải bị cắt và box person 7 bao cả cạnh khung ảnh,quan
+img_0118,bbox_drift,rejected,chợ chuối có nhiều người đứng ngồi sát nhau và cụm chuối chồng lên nhau nên không đạt tiêu chí,quan
+img_0018,class_disagreement,rejected,tay cầm bánh mì kẹp xúc xích nên box person bao cả tay và thức ăn không đúng một vật,an
+img_0034,class_disagreement,rejected,box cat khớp mask cat và mask bicycle phủ bánh xe nên không có lỗi lớp rõ ràng,an
+img_0065,class_disagreement,rejected,bé gái đứng cạnh gấu bông và ghế có nhiều box chồng lên nhau và bị che một phần nên không đạt,an
+img_0065,instance_merge,rejected,bé gái đứng cạnh gấu bông và ghế có nhiều box chồng lên nhau và bị che một phần nên không đạt,an
+img_0065,bbox_drift,rejected,bé gái đứng cạnh gấu bông và ghế có nhiều box chồng lên nhau và bị che một phần nên không đạt,an
+img_0082,class_disagreement,rejected,trụ cứu hỏa đỏ khớp box và mask còn người nhỏ xa trước xe buýt bị chồng lên nhau nên không đạt,an
+img_0082,instance_merge,rejected,trụ cứu hỏa đỏ khớp box và mask còn người nhỏ xa trước xe buýt bị chồng lên nhau nên không đạt,an
+img_0082,bbox_drift,rejected,trụ cứu hỏa đỏ khớp box và mask còn người nhỏ xa trước xe buýt bị chồng lên nhau nên không đạt,an
+img_0094,class_disagreement,rejected,xe bán tải bạc có hai box chồng lên nhau và nhiều xe xa phía sau bị cắt mép nên không đạt,an
+img_0094,instance_merge,rejected,xe bán tải bạc có hai box chồng lên nhau và nhiều xe xa phía sau bị cắt mép nên không đạt,an
+img_0094,bbox_drift,rejected,xe bán tải bạc có hai box chồng lên nhau và nhiều xe xa phía sau bị cắt mép nên không đạt,an
+img_0114,class_disagreement,rejected,chú chó ngồi trên ghế có box dog và chair chồng lên nhau nhiều và chó che một phần ghế nên loại,an
+img_0136,class_disagreement,rejected,bàn làm việc có nhiều laptop bàn phím và sách xếp chồng lấp nhau nên các box không tách rõ,an
+img_0136,instance_merge,rejected,bàn làm việc có nhiều laptop bàn phím và sách xếp chồng lấp nhau nên các box không tách rõ,an
+img_0136,bbox_drift,rejected,bàn làm việc có nhiều laptop bàn phím và sách xếp chồng lấp nhau nên các box không tách rõ,an
+img_0157,class_disagreement,rejected,người phụ nữ cầm ô đen có mask umbrella khớp box và ô che một phần đầu nên không đạt tiêu chí,an
+img_0172,class_disagreement,rejected,đua chó kéo xe có nhiều người sau hàng rào và các chó chồng lên nhau nên box không đáng tin,an
+img_0172,instance_merge,rejected,đua chó kéo xe có nhiều người sau hàng rào và các chó chồng lên nhau nên box không đáng tin,an
+img_0172,bbox_drift,rejected,đua chó kéo xe có nhiều người sau hàng rào và các chó chồng lên nhau nên box không đáng tin,an
+img_0186,class_disagreement,rejected,box car bao cả kính chắn gió và ghế còn mask chair không khớp với vật nào nên không rõ,an
+img_0212,class_disagreement,rejected,nồi bánh phía trên có box cake đúng nên lỗi box bowl không phải hoán đổi và mask khớp với nồi,an
+img_0017,class_disagreement,rejected,bàn ghế và cốc ở bên trái chồng nhau và người đứng phía sau bị che nên các box không đạt tiêu chí,an
+img_0017,bbox_drift,rejected,bàn ghế và cốc ở bên trái chồng nhau và người đứng phía sau bị che nên các box không đạt tiêu chí,an
+img_0135,class_disagreement,rejected,mèo ngồi trên băng ghế box cat khớp mask cat và box bench bao cả khung ảnh nên không có hoán đổi,an
+img_0174,class_disagreement,rejected,ngã tư đông người đi bộ và xe đạp nhỏ xa nên box person và suitcase chồng lên người không đạt,an
+img_0174,instance_merge,rejected,ngã tư đông người đi bộ và xe đạp nhỏ xa nên box person và suitcase chồng lên người không đạt,an
+img_0174,bbox_drift,rejected,ngã tư đông người đi bộ và xe đạp nhỏ xa nên box person và suitcase chồng lên người không đạt,an
+img_0200,class_disagreement,rejected,đàn bò đông trên đường có ngựa và người xa phía sau nên box cow chồng lên nhau và bị cắt mép,an
+img_0200,instance_merge,rejected,đàn bò đông trên đường có ngựa và người xa phía sau nên box cow chồng lên nhau và bị cắt mép,an
+img_0200,bbox_drift,rejected,đàn bò đông trên đường có ngựa và người xa phía sau nên box cow chồng lên nhau và bị cắt mép,an
+img_0233,class_disagreement,rejected,hai người đi chung một xe máy nên box người chồng lên xe và mask motorcycle bao cả người nên loại,an
+img_0233,instance_merge,rejected,hai người đi chung một xe máy nên box người chồng lên xe và mask motorcycle bao cả người nên loại,an
+img_0233,bbox_drift,rejected,hai người đi chung một xe máy nên box người chồng lên xe và mask motorcycle bao cả người nên loại,an
+img_0061,class_disagreement,rejected,giảng đường đông người ngồi trên ghế có sách và điện thoại chồng lên nhau nên không đạt tiêu chí,an
+img_0061,instance_merge,rejected,giảng đường đông người ngồi trên ghế có sách và điện thoại chồng lên nhau nên không đạt tiêu chí,an
+img_0061,bbox_drift,rejected,giảng đường đông người ngồi trên ghế có sách và điện thoại chồng lên nhau nên không đạt tiêu chí,an
+img_0239,class_disagreement,rejected,chim ibis khớp box và mask còn ghế bàn chồng lên nhau và có nhiều box ghế trùng nhau nên loại,an
+img_0239,instance_merge,rejected,chim ibis khớp box và mask còn ghế bàn chồng lên nhau và có nhiều box ghế trùng nhau nên loại,an
+img_0239,bbox_drift,rejected,chim ibis khớp box và mask còn ghế bàn chồng lên nhau và có nhiều box ghế trùng nhau nên loại,an
+img_0026,instance_merge,rejected,hai con chó chồng lên nhau và đĩa frisbee nằm trước con chó thứ hai nên không chắc có merge,an
+img_0026,bbox_drift,rejected,hai con chó chồng lên nhau và đĩa frisbee nằm trước con chó thứ hai nên không chắc có merge,an
+img_0045,instance_merge,rejected,hai cụm đèn giao thông nhỏ sát nhau và xe tải bị cắt mép phải nên các box không đạt tiêu chí,an
+img_0080,instance_merge,rejected,xe ba bánh chở hàng bị cắt mép phải và xe máy nhỏ đậu chồng nhau ở mép trái nên không đạt tiêu chí,an
+img_0080,bbox_drift,rejected,xe ba bánh chở hàng bị cắt mép phải và xe máy nhỏ đậu chồng nhau ở mép trái nên không đạt tiêu chí,an
+img_0123,instance_merge,rejected,tô súp có nhiều cà rốt chồng lên nhau và box bowl bao cả đĩa nên không tách được từng vật,an
+img_0123,bbox_drift,rejected,tô súp có nhiều cà rốt chồng lên nhau và box bowl bao cả đĩa nên không tách được từng vật,an
+img_0214,instance_merge,rejected,hai con voi chạm vòi nhau nên mask và box chồng lên nhau và vòi che một phần con voi phía sau,an
+img_0214,bbox_drift,rejected,hai con voi chạm vòi nhau nên mask và box chồng lên nhau và vòi che một phần con voi phía sau,an
+img_0128,instance_merge,rejected,kệ sách có hàng chục quyển chồng lên nhau và box book chồng lấp nên không đánh giá được,an
+img_0128,bbox_drift,rejected,kệ sách có hàng chục quyển chồng lên nhau và box book chồng lấp nên không đánh giá được,an
+img_0001,instance_merge,rejected,sân bóng chày trẻ em có nhiều cầu thủ nhỏ ở nền và người đánh bóng chồng lên người khác nên loại,an
+img_0001,bbox_drift,rejected,sân bóng chày trẻ em có nhiều cầu thủ nhỏ ở nền và người đánh bóng chồng lên người khác nên loại,an
+img_0124,instance_merge,rejected,đoàn biểu tình đông người và biển stop bị che một phần nên các box người chồng lên nhau,an
+img_0124,bbox_drift,rejected,đoàn biểu tình đông người và biển stop bị che một phần nên các box người chồng lên nhau,an
+img_0024,bbox_drift,rejected,xe buýt phía trước và ô tô bạc phía sau có box chồng lên nhau và xe ở xa bên phải bị cắt mép,an
+img_0203,bbox_drift,rejected,con voi con đứng trước voi lớn nên hai box elephant chồng lên cùng một thân voi và khó tách,an
+img_0029,bbox_drift,rejected,cậu bé cầm vợt có box khớp mask còn người nền bị đầu cậu bé che nên box person 3 chồng lên nhau,an
+img_0113,bbox_drift,rejected,một cái lò nướng có hai box oven chồng lên nhau trên bếp và cửa lò nên đây là tách vật không phải lỗi lớp,an
+img_0230,bbox_drift,rejected,đường phố mưa có nhiều xe nhỏ xa và xe ở mép phải bị cắt nên các box car không đủ rõ,an
+img_0096,bbox_drift,rejected,máy bay trên bệ có hàng xe nhỏ xa phía dưới và các box chồng nhau nên không đánh giá được,an
+img_0021,bbox_drift,rejected,người đàn ông đứng trước con bò có box chồng lên bò và người ở mép phải bị khuất nên không đạt,an
