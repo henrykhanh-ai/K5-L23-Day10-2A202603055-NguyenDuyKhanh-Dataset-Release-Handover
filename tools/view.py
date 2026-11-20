@@ -18,6 +18,7 @@ Chạy được trên macOS, Linux, Windows (cần Pillow: python3 -m pip instal
 Công cụ này CHỈ ĐỌC thư mục delivery. Được dùng Pillow (validator thì không).
 """
 import argparse
+import csv
 import html
 import json
 import sys
@@ -168,13 +169,13 @@ def render(root, stem, scale, classes, cats, segs, tag="", show_stuff=False, sho
     if rows is None:
         notes.append("thiếu file labels/")
     else:
-        for cid, xc, yc, bw, bh in rows:
+        for bi, (cid, xc, yc, bw, bh) in enumerate(rows):
             x0, y0 = (xc - bw / 2) * w * scale, (yc - bh / 2) * h * scale
             x1, y1 = (xc + bw / 2) * w * scale, (yc + bh / 2) * h * scale
             boxes_px.append((x0, y0, x1, y1))
             name = classes.get(cid, f"class_{cid}?")
             d2.rectangle([x0, y0, x1, y1], outline=DET_COLOR, width=lw)
-            draw_label(d2, (max(0, x0), max(0, y0 - getattr(f, "size", 11) - 3)), name, DET_COLOR, f)
+            draw_label(d2, (max(0, x0), max(0, y0 - getattr(f, "size", 11) - 3)), f"{bi}. {name}", DET_COLOR, f)
 
     # Khung 3: panoptic
     p3 = p1.copy()
@@ -239,27 +240,48 @@ def render(root, stem, scale, classes, cats, segs, tag="", show_stuff=False, sho
     return canvas, notes
 
 
-def summarize_evidence(typ, evidence, limit=8):
-    """Tóm tắt bằng chứng của một ứng viên thành chuỗi ngắn để người xem biết nhìn vào đâu."""
-    out = []
-    for e in evidence or []:
-        if not isinstance(e, dict):
-            continue
+def summarize_evidence(typ, evidence):
+    """Rút gọn bằng chứng của một ứng viên thành danh sách dòng ngắn (đã gộp trùng).
+
+    Mỗi box chỉ một dòng, dù validator ghép nó với nhiều segment.
+    """
+    ev = [e for e in (evidence or []) if isinstance(e, dict)]
+    lines, seen = [], set()
+
+    def add(line):
+        if line not in seen:
+            seen.add(line)
+            lines.append(line)
+
+    # bbox_drift: mỗi box một dòng, lấy lần ghép có IoU cao nhất với segment
+    best = {}
+    for e in ev:
+        if "bbox_iou" in e:
+            k = (e.get("class_name"), e.get("box_index"))
+            if k not in best or (e.get("bbox_iou") or 0) > (best[k].get("bbox_iou") or 0):
+                best[k] = e
+    for k in sorted(best, key=lambda k: (best[k].get("bbox_iou") or 0)):  # IoU thấp (đáng ngờ nhất) lên đầu
+        e = best[k]
+        add(f"{k[1]}. {k[0]}: IoU {e.get('bbox_iou'):.2f}, segment phủ {e.get('segment_coverage')}")
+
+    # class_disagreement: mỗi box một dòng, gộp các lớp panoptic khác nhau
+    pairs = {}
+    for e in ev:
         if "detection_class" in e or "panoptic_class" in e:
-            s = f"box#{e.get('box_index')}: detection={e.get('detection_class')} | panoptic={e.get('panoptic_class')}"
-        elif "bbox_iou" in e:
-            s = f"{e.get('class_name')} box#{e.get('box_index')}: IoU={e.get('bbox_iou')}, segment phủ={e.get('segment_coverage')}"
-        elif "box_indices" in e:
-            s = f"{e.get('class_name')}: 1 segment gộp box {','.join(str(i) for i in e['box_indices'])}"
-        elif "segment_pixels" in e:
-            s = f"{e.get('class_name')}: có segment ({e['segment_pixels']} px) mà không có box"
-        else:
-            s = json.dumps(e, ensure_ascii=False)
-        if s not in out:
-            out.append(s)
-    if len(out) > limit:
-        out = out[:limit] + [f"... +{len(out) - limit} mục nữa"]
-    return "; ".join(out)
+            pairs.setdefault((e.get("box_index"), e.get("detection_class")), [])
+            if e.get("panoptic_class") not in pairs[(e.get("box_index"), e.get("detection_class"))]:
+                pairs[(e.get("box_index"), e.get("detection_class"))].append(e.get("panoptic_class"))
+    for (bi, det), pan in sorted(pairs.items(), key=lambda kv: (kv[0][0] is None, kv[0][0])):
+        add(f"{bi}. {det}: panoptic gán \"{' / '.join(map(str, pan))}\"")
+
+    for e in ev:
+        if "box_indices" in e:  # instance_merge
+            add(f"{e.get('class_name')}: 1 segment bao box {', '.join(str(i) for i in e['box_indices'])}")
+        elif "segment_pixels" in e:  # missing_box
+            add(f"{e.get('class_name')}: có segment ({e['segment_pixels']} px) nhưng không có box")
+        elif not any(k in e for k in ("bbox_iou", "detection_class", "panoptic_class")):
+            add(json.dumps(e, ensure_ascii=False))
+    return tuple(lines)
 
 
 def parse_candidates(path):
@@ -273,13 +295,14 @@ def parse_candidates(path):
     out = []
     for it in data:
         if isinstance(it, str):
-            out.append((it, "", ""))
+            out.append((it, "", ()))
         elif isinstance(it, dict):
             img = it.get("image") or it.get("target") or it.get("name") or ""
             extra = it.get("reason") or it.get("note") or it.get("score") or ""
+            extra = (str(extra),) if extra else ()
             if not extra and it.get("evidence"):
                 extra = summarize_evidence(it.get("type"), it["evidence"])
-            out.append((str(img), str(it.get("type", "")), str(extra)))
+            out.append((str(img), str(it.get("type", "")), extra))
     return out
 
 
@@ -289,7 +312,11 @@ def main():
     ap.add_argument("images", nargs="*", help="tên ảnh (có hoặc không đuôi)")
     ap.add_argument("--all", action="store_true", help="xem mọi ảnh trong images/")
     ap.add_argument("--candidates", help="candidates.json")
+    ap.add_argument("--review", help="file review_log/review_*.csv của bạn: chỉ xem các ảnh có trong cột image "
+                                      "(nếu có cột candidate_type thì chỉ lấy đúng loại ứng viên đó)")
     ap.add_argument("--type", help="chỉ xem ứng viên thuộc loại này")
+    ap.add_argument("--per-type", action="store_true",
+                    help="mỗi (ảnh, loại ứng viên) một thẻ riêng, không gộp theo ảnh (mặc định: gộp)")
     ap.add_argument("--scale", type=int, default=2, help="hệ số phóng to (mặc định 2)")
     ap.add_argument("--stuff", action="store_true", help="vẽ cả viền nền (stuff: tường, sân, trời...)")
     ap.add_argument("--orig", action="store_true", help="thêm khung ảnh gốc")
@@ -304,43 +331,85 @@ def main():
     cats, segs = load_panoptic(root)
 
     todo = []  # (stem, type, extra)
+    review_order, review_pairs, review_imgs = [], set(), set()
+    if a.review:
+        with open(a.review, encoding="utf-8-sig", newline="") as fh:
+            for row in csv.DictReader(fh):
+                img = Path((row.get("image") or "").strip()).stem
+                if not img:
+                    continue
+                ct = (row.get("candidate_type") or row.get("type") or "").strip()
+                if img not in review_order:
+                    review_order.append(img)
+                (review_pairs.add((img, ct)) if ct else review_imgs.add(img))
+        if not review_order:
+            sys.exit(f"Không đọc được ảnh nào từ {a.review} (cần cột image)")
     if a.candidates:
         todo += [(Path(i).stem, t, e) for i, t, e in parse_candidates(a.candidates)
-                 if not a.type or t == a.type]
-    todo += [(Path(i).stem, "", "") for i in a.images]
+                 if (not a.type or t == a.type)
+                 and (not a.review or (Path(i).stem, t) in review_pairs or Path(i).stem in review_imgs)]
+    elif a.review:
+        todo += [(img, "", ()) for img in review_order]
+    if a.review:  # xếp theo thứ tự trong file review của bạn
+        todo.sort(key=lambda x: review_order.index(x[0]) if x[0] in review_order else len(review_order))
+    todo += [(Path(i).stem, "", ()) for i in a.images]
     if a.all:
-        todo += [(p.stem, "", "") for p in sorted((root / "images").iterdir())
+        todo += [(p.stem, "", ()) for p in sorted((root / "images").iterdir())
                  if p.suffix.lower() in (".jpg", ".jpeg", ".png")]
     if not todo:
         sys.exit("Chưa chọn ảnh nào: truyền tên ảnh, --all hoặc --candidates.")
 
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
-    cards, seen = [], set()
+    # Gộp theo ảnh (mặc định): mỗi ảnh vẽ MỘT lần, kèm mọi loại ứng viên + bằng chứng của ảnh đó.
+    # --per-type: về kiểu cũ, mỗi (ảnh, loại) một thẻ riêng.
+    groups = {}  # khóa -> [stem, [(typ, extra), ...]]
     for stem, typ, extra in todo:
-        if (stem, typ) in seen:
-            continue
-        seen.add((stem, typ))
-        tag = f"[{typ}]" if typ else ""
+        key = (stem, typ) if a.per_type else stem
+        g = groups.setdefault(key, [stem, []])
+        if (typ, extra) not in g[1]:
+            g[1].append((typ, extra))
+
+    cards = []  # (stem, [(typ, extra)], notes, name)
+    for stem, items in groups.values():
+        types = [t for t, _ in items if t]
+        tag = "[" + " + ".join(types) + "]" if types else ""
         canvas, notes = render(root, stem, max(1, a.scale), classes, cats, segs, tag, a.stuff, a.orig)
-        name = f"{stem}{'_' + typ if typ else ''}.png"
+        name = f"{stem}{'_' + types[0] if a.per_type and types else ''}.png"
         canvas.save(out / name)
-        cards.append((stem, typ, extra, notes, name))
+        cards.append((stem, items, notes, name))
         print(f"{name}" + (f"  ({'; '.join(notes)})" if notes else ""))
-        if extra:
-            print(f"    -> {extra}")
+        for typ, extra in items:
+            if typ or extra:
+                head = f"    {typ} ({len(extra)}):" if typ else "    "
+                print(head + "".join(f"\n        - {x}" for x in extra[:4]) + (f"\n        ... +{len(extra) - 4} dòng nữa" if len(extra) > 4 else ""))
+
+    def evidence_html(items, show=5):
+        parts = []
+        for typ, extra in items:
+            if not (typ or extra):
+                continue
+            lis = "".join(f"<li>{html.escape(x)}</li>" for x in extra[:show])
+            more = ""
+            if len(extra) > show:
+                more = (f"<details><summary>+{len(extra) - show} dòng nữa</summary><ul>"
+                        + "".join(f"<li>{html.escape(x)}</li>" for x in extra[show:]) + "</ul></details>")
+            n = f' <span class="n">{len(extra)} mục</span>' if extra else ""
+            parts.append(f'<div class="t"><span class="chip">{html.escape(typ or "ghi chú")}</span>{n}</div>'
+                         f'<ul class="ev">{lis}</ul>{more}')
+        return '<div class="e">' + "".join(parts) + "</div>" if parts else ""
 
     rows = []
-    for stem, typ, extra, notes, name in cards:
-        meta = typ
-        ev = f'<div class="e">{html.escape(extra)}</div>' if extra else ""
+    for stem, items, notes, name in cards:
+        meta = " + ".join(t for t, _ in items if t)
+        ev = evidence_html(items)
         warn = f'<div class="w">{html.escape("; ".join(notes))}</div>' if notes else ""
         rows.append(f'<section><h3>{html.escape(stem)} <small>{html.escape(meta)}</small></h3>{ev}{warn}'
                     f'<img src="{html.escape(name)}"></section>')
     (out / "index.html").write_text(
         '<!doctype html><meta charset="utf-8"><title>Xem ảnh</title>'
         '<style>body{background:#181818;color:#eee;font:15px sans-serif;margin:16px}'
-        'img{max-width:100%}.e{color:#ffd37a;margin:4px 0 8px}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
+        'img{max-width:100%}.e{margin:6px 0 10px}.t{margin-top:6px}.chip{background:#3a3320;color:#ffd37a;border-radius:4px;padding:1px 8px;font-weight:600}.n{color:#999;font-size:13px}ul.ev{margin:4px 0 4px 18px;padding:0;color:#e6e6e6;font-size:14px;line-height:1.5}summary{color:#aaa;cursor:pointer;margin-left:18px;font-size:13px}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
         f'<h2>{len(cards)} ảnh</h2>' + "".join(rows), encoding="utf-8")
     page = (out / "index.html").resolve()
     print(f"\nXong {len(cards)} ảnh. Mở {page}")
