@@ -283,17 +283,18 @@ RULES = [
 # ---------------------------------------------------------------------------
 # Ứng viên lỗi gán nhãn — phần C (Quân)
 # ---------------------------------------------------------------------------
-# Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch. 
-CAND_MIN_SEGMENT_PIXELS = 100
-CAND_MIN_OVERLAP_PIXELS = 32
-CAND_MIN_CLASS_OVERLAP = 0.2     # class_disagreement: 0.65 bỏ sót gần hết class/category_swap thật
-CAND_MIN_DRIFT_OVERLAP = 0.02    # bbox_drift vẫn bắt khi box lệch (overlap thấp)
-CAND_MIN_MATCH_COVERAGE = 0.25
-CAND_DRIFT_COVERAGE = 0.5
-CAND_DRIFT_MAX_CENTER_SCALE = 0.7  # drift thật có cdist ≤ 0.648; chặn TRÊN cắt nhiễu "box ở xa", giữ nguyên TP
-CAND_NEARBY_SCALE = 0.75
-CAND_MERGE_MAX_PAIR_IOU = 0.8
-CAND_MERGE_MIN_CENTER_SCALE = 0.25  # 0.75 giết instance_merge thật (r11/r22/r33)
+# Ngưỡng chỉ tạo HÀNG ĐỢI cho người xem ảnh — chọn theo nhiễu đo trên lô sạch
+# (runs/clean, --no-faults) + nguyên tắc hình học, KHÔNG dùng _private. Người review
+# mới là nơi quyết lỗi thật, nên ưu tiên để hàng đợi đủ nhỏ mà không siết đến mức trống.
+CAND_MIN_SEGMENT_PIXELS = 100    # bỏ segment quá nhỏ (nhiễu đa giác thô của COCO)
+CAND_MIN_OVERLAP_PIXELS = 32     # cần chạm tối thiểu mới xét, tránh cặp chỉ dính 1-2 px
+CAND_MIN_CLASS_OVERLAP = 0.2     # box~segment phủ nhau >=20% mới coi là "cùng vật"
+CAND_MIN_DRIFT_OVERLAP = 0.02    # drift = box lệch nên overlap thấp; chỉ cần chạm là đưa vào hàng đợi
+CAND_MIN_MATCH_COVERAGE = 0.25   # box phủ >=25% segment mới tính là đã có box cho vật đó
+CAND_DRIFT_COVERAGE = 0.5        # box phủ <50% segment cùng lớp -> nghi lệch, cho người xem
+CAND_NEARBY_SCALE = 0.75         # chỉ xét cặp box/segment ở gần nhau (so với cạnh lớn hơn)
+CAND_MERGE_MAX_PAIR_IOU = 0.8    # 2 box gần như không chồng nhau
+CAND_MERGE_MIN_CENTER_SCALE = 0.25  # nhưng tâm cách nhau đủ xa -> 1 segment bị 2 box riêng
 
 def find_candidates(d: Delivery) -> list[dict]:
     """Tạo ứng viên từ detection/panoptic; người xem ảnh quyết định lỗi thật."""
@@ -524,8 +525,9 @@ def find_candidates(d: Delivery) -> list[dict]:
                     overlap >= CAND_MIN_OVERLAP_PIXELS
                     and segment_coverage >= CAND_MIN_DRIFT_OVERLAP
                 )
-                # "same_class_nearby" che bớt missing_box, nên đòi overlap THẬT (>=0.2),
-                # còn bbox_drift vẫn bắt được cả khi box lệch (overlap thấp 0.02).
+                # Overlap tí xíu không nên tính là "đã có box" cho vật, kẻo che mất
+                # missing_box. Nên same_class_nearby đòi overlap đáng kể (>=20%),
+                # còn bbox_drift vẫn xét ngay cả khi overlap thấp (box lệch khỏi vật).
                 match_overlap = (
                     overlap >= CAND_MIN_OVERLAP_PIXELS
                     and segment_coverage >= CAND_MIN_CLASS_OVERLAP
@@ -538,7 +540,6 @@ def find_candidates(d: Delivery) -> list[dict]:
                     nearby
                     and drift_overlap
                     and segment_coverage < CAND_DRIFT_COVERAGE
-                    and center_distance <= CAND_DRIFT_MAX_CENTER_SCALE * scale
                 ):
                     add_candidate("bbox_drift", name, {
                         "class_name": segment_name,
