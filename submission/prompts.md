@@ -52,7 +52,14 @@ Rút ra: AI dựng khung và đo ngưỡng nhanh, nhưng **kết luận cuối (
 
 # Dùng AI — phần D (Thúy An)
 
-Phần này mình (D — Thúy An) ghi lại việc dùng AI cho công cụ xem ảnh `tools/view.py`.
+Phần này mình (D — Thúy An) ghi lại việc dùng AI cho công cụ xem ảnh `tools/view.py` (Pha 1–2),
+lineage + dựng lô v2 bằng `tools/build_v2.py` (Pha 3–4) và truy vết `trace.json` (Pha 5).
+
+**Công cụ:** Claude Code (app desktop).
+
+**Ảnh COCO đưa vào AI:** Claude Code có mở trực tiếp ảnh trong lô (ví dụ 2 ảnh `wrong_hash`
+ở mục 5, và ảnh xuất ra từ `view.py` khi thử công cụ). Ảnh COCO là dữ liệu công khai nên
+được phép; với dữ liệu thật của dự án thì không làm vậy (xem `security.md`).
 
 ## 1. Nhờ AI làm gì
 
@@ -78,7 +85,87 @@ mục delivery**, không đọc `_private/`. Mình yêu cầu chạy được tr
 - Không tin mắt thuần: với ảnh nghi lỗi mình kiểm bằng số (IoU giữa box và segment)
   rồi mới kết luận; một số chỗ lệch là sai khác tự nhiên của COCO (đa giác thô, bị
   che), không phải lỗi gài.
-- Đã gửi gói test cho cả nhóm chạy trên Windows (kết quả: chờ báo cáo từng bạn).
+- Đã gửi gói test cho cả nhóm chạy thử trên máy mỗi người (có máy Windows): tất cả đều chạy
+  được, ra ảnh và `index.html` bình thường.
+
+## 4. Cập nhật view.py ở Pha 2 (in bằng chứng ứng viên)
+
+Khi `candidates.json` có 234 ứng viên (137 ảnh), mình nhờ AI sửa `tools/view.py` cho hợp
+với việc chia hàng đợi review:
+
+- **In bằng chứng gọn dưới mỗi ảnh**, mỗi box một dòng, ví dụ `3. bed: panoptic gán
+  "teddy bear"` (class_disagreement), `5. car: IoU 0.25, segment phủ 0.61`
+  (bbox_drift), `person: 1 segment bao box 8, 10` (instance_merge), `kite: có segment
+  (161 px) nhưng không có box` (missing_box). Quá 5 dòng thì gập lại.
+- **Gộp theo ảnh:** một ảnh có nhiều loại ứng viên chỉ hiện một thẻ (trước đây lặp lại).
+- **Đánh số box** dạng `N. class` chỉ ở khung detection (khung panoptic bỏ nhãn cho đỡ
+  rối), để dòng bằng chứng nói "box 3" là nhìn ra ngay box nào.
+- **`--review <file.csv>`:** chỉ hiện các ảnh trong file phân công của mỗi người, đúng thứ
+  tự file, thẻ đánh số `k/tổng` để vừa xem vừa điền.
+
+Thông tin bằng chứng **lấy nguyên từ `candidates.json`** (validator của C sinh ra);
+`view.py` chỉ diễn đạt lại, không đọc `_private`.
+
+**AI sai / mình phải sửa:**
+- Bản đầu AI ghi `box#7` mà không kèm tên lớp, trên ảnh thì nhãn chỉ có tên lớp nên không
+  biết `#7` là box nào. Mình yêu cầu ghi cùng một dạng `7. car` ở cả bằng chứng lẫn ảnh.
+- Đánh số ở cả hai khung làm ảnh nhỏ bị chồng chữ, không đọc được; mình yêu cầu bỏ số ở
+  khung panoptic.
+
+**Kiểm tra:** chạy trên `runs/r5007` với cả 4 loại ứng viên (234/234 ứng viên có dòng bằng
+chứng); chạy lại với `candidates.json` dạng cũ (danh sách tên ảnh, dạng có `reason`) để
+chắc không hỏng chức năng cũ; chạy `--review` với file phân công thật và so số thẻ với số
+ảnh trong file. Dòng bằng chứng chỉ là gợi ý nhìn vào đâu, kết luận `confirmed`/`rejected`
+do người xem ảnh quyết.
+
+## 5. Lineage và dựng lô v2 (`tools/build_v2.py`)
+
+Sau khi A gộp `errors.json` (17 lỗi) và `review_log.csv`, mình chạy lineage theo GUIDE:
+QC v1 = 17/250 = 6,8% > 2% nên ghi **HOLD**; `lineage.py impact` ra
+`R-021: affected=True action=review_or_retrain`.
+
+Mình nhờ AI viết `tools/build_v2.py` để dựng `handover/<release_id>_v2/` từ `delivery/`
+(không sửa `delivery/`) theo bảng phân loại ở Pha 4:
+- lỗi nhãn detection / thiếu file → `rework_queue.csv` (người gán, người kiểm lấy theo
+  `jobs.csv`) và bỏ khỏi v2: 9 ảnh;
+- lỗi chỉ ở panoptic → ảnh ở lại v2, báo team panoptic: 4 ảnh;
+- `wrong_hash`, `scene_leak`, `guideline_mismatch` → sửa ngay trong v2 (manifest tính lại
+  sha256; cả `scene_315` về train; guideline theo job).
+Kết quả v2: 241 ảnh, 1669 nhãn.
+
+**AI sai / mình phải sửa:**
+- **Làm lấn phần người khác:** bản đầu AI sinh luôn `label_summary.csv`, `truyvet.csv`
+  (phần của C) và `README.txt` (phần của B), rồi đóng gói và chạy `export_submission`
+  (phần của A). Mình đối chiếu bảng phân công nhóm, yêu cầu bỏ các phần đó: script chỉ dựng
+  `images/`, `labels/`, `rework_queue.csv`, `manifest.csv` và **in số liệu** để bàn giao cho
+  B, C. Gói `.zip`/`.sha256` đã đóng trước đó cũng xoá, đợi đủ file của B, C mới đóng lại.
+- **`wrong_hash` không được tự sửa mù:** GUIDE yêu cầu mở ảnh kiểm trước khi ghi hash mới.
+  Hai ảnh `000000000785` (người trượt tuyết) và `000000023272` (mèo nằm trên nắp ô tô) được
+  mở ra xem: ảnh mở được, đúng nội dung và khớp nhãn (person + skis; cat + car), nên chỉ
+  manifest v1 sai → giữ trong v2 với sha256 mới, không đưa vào rework.
+
+**Kiểm tra:**
+- Release ID: nhóm thống nhất dùng ID trên máy mình, `lab250_12a734d6195d` (đúng với
+  `release.json` của lô), nên đóng gói và `check_handover` chạy trên máy mình.
+- Đối chiếu `rework_queue.csv` với `jobs.csv` (đúng người gán/kiểm từng job).
+- Khi nhận file của B, C: so cả gói C gửi với lô của mình (`diff -r`), ảnh, nhãn, manifest,
+  rework, README giống hệt, chỉ thêm đúng `label_summary.csv` và `truyvet.csv`; xem `truyvet`
+  của 2 ảnh được sửa (`000000025394` → train, `000000015597` → v1.3 theo J07).
+- Sau khi đủ 7 phần: `pack_release.py`, `lineage.py record --event release` (parent là v1),
+  rồi `scripts/check_handover.py --run runs/r5007`: **17 PASS, 0 FAIL**. Cuối cùng chạy
+  `export_submission.py` sang `submission/r5007/` (không chép `.zip`).
+
+## 6. Truy vết `trace.json`
+
+AI chỉ đưa câu lệnh để mình tự chạy: lấy `scene_id` từ `metadata.json`, phiên bản guideline
+**theo job** trong `jobs.csv` (không theo metadata từng ảnh), lọc ảnh có box thuộc lớp bị đổi
+quy tắc trong `labels/`, và lấy người gán/kiểm của các job liên quan. Mình không dùng script
+riêng (bản `trace_tiers.py` AI viết thử đã xoá), tự đọc kết quả từng ảnh rồi điền
+`tier_a` (3 ảnh), `tier_b` (6 ảnh), `notify` (3 người). `check_handover` mục H16 PASS.
+
+Rút ra: AI viết công cụ và script nhanh, nhưng mình phải đối chiếu với GUIDE và bảng phân công
+(AI dễ làm thừa phần người khác), mở ảnh thật trước khi kết luận, và chạy `check_handover`
+sau mỗi lần thay đổi lô thay vì tin vào số AI báo.
 
 ---
 
