@@ -239,6 +239,29 @@ def render(root, stem, scale, classes, cats, segs, tag="", show_stuff=False, sho
     return canvas, notes
 
 
+def summarize_evidence(typ, evidence, limit=8):
+    """Tóm tắt bằng chứng của một ứng viên thành chuỗi ngắn để người xem biết nhìn vào đâu."""
+    out = []
+    for e in evidence or []:
+        if not isinstance(e, dict):
+            continue
+        if "detection_class" in e or "panoptic_class" in e:
+            s = f"box#{e.get('box_index')}: detection={e.get('detection_class')} | panoptic={e.get('panoptic_class')}"
+        elif "bbox_iou" in e:
+            s = f"{e.get('class_name')} box#{e.get('box_index')}: IoU={e.get('bbox_iou')}, segment phủ={e.get('segment_coverage')}"
+        elif "box_indices" in e:
+            s = f"{e.get('class_name')}: 1 segment gộp box {','.join(str(i) for i in e['box_indices'])}"
+        elif "segment_pixels" in e:
+            s = f"{e.get('class_name')}: có segment ({e['segment_pixels']} px) mà không có box"
+        else:
+            s = json.dumps(e, ensure_ascii=False)
+        if s not in out:
+            out.append(s)
+    if len(out) > limit:
+        out = out[:limit] + [f"... +{len(out) - limit} mục nữa"]
+    return "; ".join(out)
+
+
 def parse_candidates(path):
     """Chấp nhận nhiều dạng: ["id", ...], [{"image"|"target": id, "type": ...}], {"candidates": [...]}."""
     data = json.loads(Path(path).read_text(encoding="utf-8"))
@@ -254,6 +277,8 @@ def parse_candidates(path):
         elif isinstance(it, dict):
             img = it.get("image") or it.get("target") or it.get("name") or ""
             extra = it.get("reason") or it.get("note") or it.get("score") or ""
+            if not extra and it.get("evidence"):
+                extra = summarize_evidence(it.get("type"), it["evidence"])
             out.append((str(img), str(it.get("type", "")), str(extra)))
     return out
 
@@ -302,17 +327,20 @@ def main():
         canvas.save(out / name)
         cards.append((stem, typ, extra, notes, name))
         print(f"{name}" + (f"  ({'; '.join(notes)})" if notes else ""))
+        if extra:
+            print(f"    -> {extra}")
 
     rows = []
     for stem, typ, extra, notes, name in cards:
-        meta = " ".join(x for x in (typ, extra) if x)
+        meta = typ
+        ev = f'<div class="e">{html.escape(extra)}</div>' if extra else ""
         warn = f'<div class="w">{html.escape("; ".join(notes))}</div>' if notes else ""
-        rows.append(f'<section><h3>{html.escape(stem)} <small>{html.escape(meta)}</small></h3>{warn}'
+        rows.append(f'<section><h3>{html.escape(stem)} <small>{html.escape(meta)}</small></h3>{ev}{warn}'
                     f'<img src="{html.escape(name)}"></section>')
     (out / "index.html").write_text(
         '<!doctype html><meta charset="utf-8"><title>Xem ảnh</title>'
         '<style>body{background:#181818;color:#eee;font:15px sans-serif;margin:16px}'
-        'img{max-width:100%}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
+        'img{max-width:100%}.e{color:#ffd37a;margin:4px 0 8px}h3 small{color:#aaa;font-weight:400}.w{color:#ff9b9b}section{margin-bottom:28px}</style>'
         f'<h2>{len(cards)} ảnh</h2>' + "".join(rows), encoding="utf-8")
     page = (out / "index.html").resolve()
     print(f"\nXong {len(cards)} ảnh. Mở {page}")
