@@ -1,0 +1,10 @@
+image,type,annotator,reviewer,action
+000000001993,bbox_out_of_bounds,A01,Q03,vẽ lại box nằm trong khung ảnh
+000000002587,class_swap,A05,Q01,sửa lớp detection cho đúng vật
+000000009590,class_swap,A04,Q01,sửa lớp detection cho đúng vật
+000000009769,invalid_class,A04,Q01,gán lại lớp trong 0-79 theo classes.txt
+000000015497,class_swap,A05,Q03,sửa lớp detection cho đúng vật
+000000016249,class_swap,A05,Q03,sửa lớp detection cho đúng vật
+000000020333,invalid_class,A02,Q03,gán lại lớp trong 0-79 theo classes.txt
+000000023126,duplicate_box,A02,Q03,xóa box trùng
+000000024027,missing_box,A05,Q02,vẽ thêm box cho vật bị thiếu

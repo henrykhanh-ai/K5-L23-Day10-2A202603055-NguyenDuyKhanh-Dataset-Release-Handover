@@ -1,0 +1,235 @@
+image,type,verdict,note,reviewer
+000000000139,bbox_drift,rejected,Khung sach o phong khach nam dung vung vat; duong mask hoi tho nhung khong lech ro,Khanh
+000000001000,bbox_drift,rejected,Nhieu nguoi dung gan nhau; box va vien mask khac do che khuat va chong lap,Khanh
+000000001584,bbox_drift,rejected,Xe buyt do duoc box bao quanh phu hop; mask theo than xe khong lech dang ke,Khanh
+000000002685,bbox_drift,rejected,Chai va nguoi trong quay hang bi che mot phan; khung khong lech ro khoi vat,Khanh
+000000003934,bbox_drift,rejected,Nguoi di qua phong va ghe sofa chong lap; box rong do tu the chuyen dong,Khanh
+000000005193,bbox_drift,rejected,Nguoi dung sau cac tam van va do vat; mask bi che khuat nen khong du co so,Khanh
+000000005992,bbox_drift,rejected,Nhieu con cuu chen sat nhau; box va mask khac nhau do chong lap than cuu,Khanh
+000000006771,bbox_drift,rejected,Nguoi o giua dam dong bi che mot phan; box khong lech han khoi nguoi,Khanh
+000000007386,bbox_drift,rejected,Xe ba banh co khung hinh phuc tap; mask chi bao mot so bo phan nen kho ket luan,Khanh
+000000007818,bbox_drift,rejected,Ly tren ban an co duong vien mask va box gan khop; khong thay lech nghiem trong,Khanh
+000000008844,bbox_drift,rejected,Quay chuoi tien canh bi che mot phan; box bao ca cum chuoi nen kho ket luan,Khanh
+000000009891,bbox_drift,rejected,Xe trong bai do bi che va chong lap; mask va box khac nhau khong du ro,Khanh
+000000011051,bbox_drift,rejected,Nguoi dung trong anh chup doi; khung bao nguoi phu hop voi duong vien mask,Khanh
+000000012062,bbox_drift,rejected,Cuu dung canh long cuu; mask bi chia boi che khuat nen box khong lech ro,Khanh
+000000012670,bbox_drift,rejected,Dam dong rat nhieu nguoi; cac box chong lap va mask thieu ro rang,Khanh
+000000013729,bbox_drift,rejected,Ba nguoi trong phong duoc khoanh theo tung than; khong thay box lech han,Khanh
+000000014439,bbox_drift,rejected,Dieu bay va nguoi tren bai co duong vien phuc tap; box chua cho thay lech ro,Khanh
+000000015517,bbox_drift,rejected,Xe buyt mau vang duoc box bao quanh than; mask van nam trong vung box,Khanh
+000000016249,bbox_drift,rejected,Ghe dai va nguoi ngoi che nhau; mask va box khac do che khuat,Khanh
+000000017207,bbox_drift,rejected,Xe phan chieu trong guong tron nho; khong the xac nhan box lech han,Khanh
+000000017959,bbox_drift,rejected,Nguoi tren sofa va nguoi tien canh bi che khuat; box khong lech ro,Khanh
+000000018575,bbox_drift,rejected,Chai tren ban lam viec nho va bi do vat che; mask khong du ro de xac nhan,Khanh
+000000019432,bbox_drift,rejected,Ghe va do vat trong phong co nhieu canh chong lap; box khong lech han,Khanh
+000000021167,bbox_drift,rejected,Nguoi ngoi tren tau va ban an gan nhau; box van bao phan lon than nguoi,Khanh
+000000022755,bbox_drift,rejected,Nguoi dung gan giao lo o xa; box va mask gan nhau du anh toi,Khanh
+000000023899,bbox_drift,rejected,Nguoi dung trong anh va do vat chong lap; box khong lech ro khoi nguoi,Khanh
+000000024610,bbox_drift,rejected,Box rong bao khu vuc sach xep tren ke; khong thay box bi day lech han ve mot phia,Khanh
+000000025386,bbox_drift,rejected,Nguoi ngoi tren ghe tau bi che mot phan; box rong nhung khong lech han,Khanh
+000000001000,class_disagreement,rejected,Nhieu nguoi va tui deo chong len nhau; box co the thuoc vat khac nen khong xac nhan sai nhan,Khanh
+000000002587,class_swap,confirmed,Box khoanh dung chiec banh donut canh qua chuoi; nhan banana khong phu hop vat trong box,Khanh
+000000005193,class_disagreement,rejected,Nguoi dung xen giua cac tam van luot; box cua nguoi va van chong len nhau nen khong xac nhan,Khanh
+000000006894,class_disagreement,rejected,Nguoi va voi dung canh nhau; box hai vat giao nhau nhung deu co vung nhan rieng,Khanh
+000000008211,class_disagreement,rejected,Nguoi ngoi tren ghe sat xe may; box chair co the thuoc ghe bi nguoi che nen khong xac nhan,Khanh
+000000009590,class_swap,confirmed,Box khoanh vat dung thuc an dang bat; nhan cup khong dung hinh dang vat va khong thay box dung khac,Khanh
+000000010583,class_disagreement,rejected,Thuc an dat tren dia va ban; box rong co the thuoc vat chua ben duoi nen chua du bang chung,Khanh
+000000012062,class_disagreement,rejected,Vung long cuu trong anh khong the nhan chac orange hay sports ball,Khanh
+000000013597,class_disagreement,rejected,Mieng banh nam tren dia; box bao rong ca dia nen chua chac nhan cua chinh mieng banh,Khanh
+000000014226,class_disagreement,rejected,Nguoi ngoi truoc ghe va ban; box ghe giao voi than nguoi do che khuat nen khong xac nhan,Khanh
+000000016249,class_swap,confirmed,Box bao ghe dai nhieu cho ngoi; nhan chair khong dung bang bench va khong thay box dung khac,Khanh
+000000017714,class_disagreement,rejected,Khu vuc do an va muong chong lap; khong xac dinh chac cup hay spoon,Khanh
+000000019786,class_disagreement,rejected,Nguoi cui truoc ghe sofa; box couch thuoc ghe phia sau va chong len nguoi,Khanh
+000000021839,class_disagreement,rejected,Nguoi dung gan tui xach va do vat; box cua cac vat chong nhau nen chua du co so doi nhan,Khanh
+000000022892,class_disagreement,rejected,Meo nam canh lan can va chau cay; box chair co the thuoc do vat phia duoi nen khong xac nhan,Khanh
+000000025393,class_disagreement,rejected,Hai nguoi tren duong deu co box rieng; box car co the thuoc xe phia sau nen khong xac nhan,Khanh
+000000001353,instance_merge,rejected,Nhieu tre ngoi sat tren xe tro choi; cac mask chong lap nen chua chac gop,Khanh
+000000002299,instance_merge,rejected,Anh tap the co nhieu nguoi sat nhau; khong tach ro mot mask chung hai nguoi,Khanh
+000000005001,instance_merge,rejected,Dam dong tai su kien co nhieu nguoi bi che; chua thay mot mask gop ro,Khanh
+000000006471,instance_merge,rejected,Cau thu va nguoi bat bong gan nhau nhung mask khac; chua thay gop instance,Khanh
+000000007574,instance_merge,rejected,Nhieu chai dung tren ban bep; vien mask tach nhau hoac bi che mot phan,Khanh
+000000009378,instance_merge,rejected,Nguoi dua dia va nhung nguoi phia sau bi che; chua co bang chung mask gop,Khanh
+000000010707,instance_merge,rejected,Nguoi trong phong khach ngoi gan nhau; vien mask chong lap khong du xac nhan,Khanh
+000000013729,instance_merge,rejected,Ba nguoi trong phong duoc phan vung rieng; khong thay chung mot mask,Khanh
+000000015335,instance_merge,rejected,Nhieu nguoi ngoi quan an gan nhau; vien mask bi che khuat nen khong chac,Khanh
+000000016451,instance_merge,rejected,Nhieu tui tren bai bien nam sat nhau; khong du ro mot mask chung hai tui,Khanh
+000000018380,instance_merge,rejected,Anh gia dinh quanh ban co nhieu nguoi; mask chong lap khong du ro gop,Khanh
+000000019786,instance_merge,rejected,Hai nguoi trong toa tau co vien mask rieng; khong thay gop instance,Khanh
+000000023937,instance_merge,rejected,Nhieu con bo nam xa tren bai co; mask nho va mo khong du ket luan gop,Khanh
+000000025386,instance_merge,rejected,Hai nguoi tren tau duoc phan vung rieng; khong thay mot mask chung,Khanh
+000000020333,missing_box,rejected,Ca vat tie duoc box nho nhan dien tren ao; khong co bang chung thieu box ro,Khanh
+000000000632,bbox_drift,rejected,"Các box hẹp ôm từng gáy sách trên kệ bên phải, còn một số viền mask bao cả cụm sách đứng sát nhau.",Loan
+000000001296,bbox_drift,rejected,"Sau cô gái cầm điện thoại chỉ lộ một phần đầu người ở góc trên phải, còn box lớn vẫn bám theo cô gái phía trước.",Loan
+000000002153,bbox_drift,rejected,"Người đỡ bóng ngồi thấp sát trọng tài áo xanh nên hai box chồng lên nhau, còn viền người đỡ bóng dừng ở phần bị trọng tài che.",Loan
+000000003255,bbox_drift,rejected,"Nhóm người dưới chân dốc tuyết rất nhỏ và đứng sát nhau, nên khi phóng to vẫn khó thấy box nào lệch khỏi người tương ứng.",Loan
+000000004134,bbox_drift,rejected,"Hai người bắt tay ở tiền cảnh khớp với box, còn khách phía sau bị bàn tiệc và người đứng trước che nên không thấy rõ box nào bị lệch.",Loan
+000000005477,bbox_drift,rejected,"Dưới thân máy bay vàng chỉ lộ các dải thân và đuôi máy bay trắng ở xa, đúng vùng mà box thấp phía trái bao quanh.",Loan
+000000006040,bbox_drift,rejected,"Qua cửa sổ tàu chỉ thấy đầu và phần thân trên của hành khách, các box nhỏ nằm quanh đúng các ô cửa có người.",Loan
+000000006954,bbox_drift,rejected,"Hai đĩa trắng che phần bụng và đùi của các bé ngồi trên cỏ, còn box người vẫn bao phần đầu và chân nhìn thấy.",Loan
+000000007574,bbox_drift,rejected,"Các ly chân dài cạnh chai xanh trên bàn bếp đứng sát nhau, nhưng viền từng ly vẫn nằm quanh vị trí box của ly đó.",Loan
+000000008021,bbox_drift,rejected,"Box giữa ảnh bao người mặc vest trên màn chiếu, còn hai đầu khán giả ở mép dưới có vùng riêng.",Loan
+000000009378,bbox_drift,rejected,"Box lớn bao người nghiêng mình cầm đĩa vàng, còn các box nhỏ ở mép dưới bên phải nằm quanh những gương mặt phía sau.",Loan
+000000010092,bbox_drift,rejected,"Mặt bàn tròn che một phần ghế gỗ ở góc phải, nên mask chỉ men theo những đoạn tựa và chân ghế còn lộ trong vùng box.",Loan
+000000011197,bbox_drift,rejected,"Người mặc áo xanh cạnh biển vàng hiện rõ phía bên phải cột, còn người đứng sát phía sau chỉ lộ một dải hẹp giữa cột và người phía trước.",Loan
+000000012120,bbox_drift,rejected,"Chiếc ghế sát mép sân chỉ lộ một dải hẹp bên người ngồi, nên khó xác định box có thật sự lệch khỏi ghế.",Loan
+000000013291,bbox_drift,rejected,"Các đĩa trắng che ngang thân nhóm người trên bãi cỏ, nhưng box của người áo trắng bên phải vẫn bao đầu và chân duỗi ra.",Loan
+000000013923,bbox_drift,rejected,"Mặt bàn trắng che một phần các ghế đỏ, còn box phía phải vẫn bao phần tựa đỏ và khung ghế nhìn thấy.",Loan
+000000015079,bbox_drift,rejected,"Hai miếng sandwich nằm gối lên nhau trên đĩa, nhưng mỗi box vẫn bao đúng miếng bánh tương ứng với viền mask.",Loan
+000000015751,bbox_drift,rejected,"Con chim đang xòe cánh trước ván xanh có box bao từ đầu đến chót cánh, còn viền mask chạy sát theo dáng cánh hẹp.",Loan
+000000016451,bbox_drift,rejected,"Hai túi có họa tiết cạnh ghế bãi biển nằm sát nhau, nhưng mỗi box vẫn bao phần túi tương ứng thấy được.",Loan
+000000017627,bbox_drift,rejected,"Dãy ô tô đỗ trước tường đá chồng mép box theo góc nhìn, còn viền của xe đen và xe bạc ở giữa vẫn bám vào từng xe.",Loan
+000000018150,bbox_drift,rejected,"Người đàn ông áo xanh đưa miếng pizza về phía cậu bé, khiến hai box gần nhau quanh vùng tay dù thân hai người vẫn tách rõ.",Loan
+000000018837,bbox_drift,rejected,"Cabin xe tải xanh che bớt người ở cạnh cửa, còn hai người phía trên nóc có box bám theo phần thân nhìn thấy.",Loan
+000000019786,bbox_drift,rejected,"Người áo tối đang cúi trước người đứng áo xám, nên hai box chồng ở vùng giữa ảnh trong khi viền mask vẫn theo từng dáng người.",Loan
+000000021503,bbox_drift,rejected,"Những lát sandwich trên bàn chồng ở góc nhìn xiên, nhưng viền từng lát vẫn theo mép bánh trong box tương ứng.",Loan
+000000022935,bbox_drift,rejected,"Quả bóng nằm trước cánh tay cầu thủ áo xanh, còn box người vẫn bao đầu, thân và tay dang sang trái.",Loan
+000000024021,bbox_drift,rejected,"Trong ảnh lớp đen trắng, nhiều học sinh chỉ lộ mặt qua vai bạn phía trước, còn các box riêng vẫn tập trung vào các phần người nhìn thấy.",Loan
+000000024919,bbox_drift,rejected,"Hai con voi chạm vùng vòi ở giữa ảnh và bụi cây che chân, nhưng mỗi box vẫn bao lưng và thân của một con.",Loan
+000000025393,bbox_drift,rejected,"Các xe ở xa bên trái ảnh đêm chỉ hiện rõ đèn và vài mép thân, nên không thấy đủ đường biên để xác nhận box bị lệch.",Loan
+000000001268,class_swap,rejected,"Người đứng bên phải dưới cầu đeo một túi nâu sát hông, nên box người chồng lên vùng túi dù hai viền chỉ hai vật riêng.",Loan
+000000002592,class_swap,rejected,"Con dao cán đen nằm ngang trước chiếc cốc trắng và trên mặt bàn, nên box dao cắt qua vùng mặt bàn theo góc nhìn.",Loan
+000000006040,class_swap,rejected,"Ở mép trái đoàn tàu, ô tô tối màu nằm trước xe tải thùng xám và có đường viền riêng với thùng xe phía sau.",Loan
+000000006954,class_swap,rejected,"Bé áo xanh ở bên phải giữ đĩa trắng trước ngực, với viền đĩa tròn tách rõ khỏi mặt và tay của bé.",Loan
+000000008690,class_swap,rejected,"Hai bé đứng sau các con vật ở hàng rào, nên phần box người chồng lên lưng con vật ở tiền cảnh.",Loan
+000000009891,class_swap,rejected,"Chiếc vali cứng dựng sát đuôi ô tô trắng còn ba lô mềm nằm thấp phía trước, nên hai vùng chồng theo chiều nhìn dù là hai món đồ riêng.",Loan
+000000010707,class_swap,rejected,"Ba lô tối màu nằm gần ghế bên trái, còn vùng mặt bàn thấp có các lon và cốc ở tiền cảnh là một vật riêng.",Loan
+000000012576,class_swap,rejected,"Chiếc pizza lớn nằm trong hộp mở ngay trên bàn trải khăn, nên vùng của bàn và vùng của pizza gần nhau nhưng có biên riêng.",Loan
+000000013659,class_swap,rejected,"Người ở tiền cảnh cúi về phía laptop, còn lưng ghế xanh nhô lên sau vai phải và có viền riêng.",Loan
+000000015254,class_swap,rejected,"Chiếc thìa sáng nằm dọc mép phải khay, còn bát xanh đựng nho nằm sát bên trái chiếc thìa.",Loan
+000000016451,class_swap,rejected,Túi xách có họa tiết ở cạnh ghế và ba lô đỏ đen nằm thấp hơn trên cát là hai món đồ tách biệt.,Loan
+000000018193,class_swap,rejected,"Người mặc áo xanh đang ăn che phần giữa ghế xếp, còn tựa lưng xanh đậm và tay ghế vẫn nhô ra hai bên.",Loan
+000000020553,class_swap,rejected,"Trên bàn nhỏ giữa bãi đất, chai tối màu đứng sát bên trái bình có hoa vàng và hai vật vẫn có đường viền riêng.",Loan
+000000021879,class_swap,rejected,"Ở phía trên bên phải, người mặc đồ đen ngồi trên ván xanh, còn đầu ván chìa ra khỏi vùng thân người.",Loan
+000000023359,class_swap,rejected,"Tấm ván trắng nằm dưới giày người mặc quần vàng đang bật lên khỏi dốc, với viền ván riêng ngoài chân người.",Loan
+000000000776,instance_merge,rejected,"Gấu màu kem ở giữa bị gấu cam phía trước che một phần, nhưng đường viền bên phải vẫn tách được mặt và chân của từng con.",Loan
+000000001584,instance_merge,rejected,"Người đi bộ sát đầu xe buýt đỏ rất nhỏ và đứng gần nhau, nên không thấy rõ một viền người bao trọn cả hai.",Loan
+000000002685,instance_merge,rejected,"Nhiều cổ chai chen sát dưới tủ kính và một phần thân chai bị người áo xanh che, nên không thấy rõ một mask ôm hai chai.",Loan
+000000005193,instance_merge,rejected,"Vai người đang cầm máy ảnh che ngang người mặc áo đỏ, nhưng hai vùng có đường viền riêng dọc theo mép vai.",Loan
+000000006763,instance_merge,rejected,"Người áo xanh vòng tay qua vai người áo trắng, còn đường viền ở mặt và thân vẫn tách được hai người ngồi cạnh nhau.",Loan
+000000007795,instance_merge,rejected,"Giường gần che mép dưới giường cạnh cửa sổ, nhưng hai đường viền vẫn chạy riêng quanh mỗi đệm trắng.",Loan
+000000009400,instance_merge,rejected,"Người đàn ông đeo kính và người bên phải ngồi sát sau các laptop, nhưng viền quanh đầu và vai của họ vẫn tách nhau.",Loan
+000000012120,instance_merge,rejected,"Quanh người ngồi bên sân tennis và hàng khán giả chỉ lộ những mảnh ghế nhỏ, nên không thấy rõ một mask nối qua hai ghế.",Loan
+000000013923,instance_merge,rejected,"Ghế đỏ cạnh trái bàn tròn và ghế đỏ sát tường có phần tựa nhìn thấy tách nhau, còn mặt bàn che các phần thấp hơn.",Loan
+000000015517,instance_merge,rejected,"Các xe buýt ở bãi phía xa đỗ sít nhau và vùng gom nhóm có nhãn crowd, còn xe xanh ở tiền cảnh có viền riêng.",Loan
+000000017182,instance_merge,rejected,"Các cuốn sách xanh dựng sát trên bàn gỗ, nhưng phía mask vẫn có đường viền hẹp riêng theo từng gáy.",Loan
+000000018491,instance_merge,rejected,"Hai cầu thủ cúi thấp sát vạch trắng có box chồng quanh chân, nhưng mỗi người vẫn có viền riêng quanh áo và quần.",Loan
+000000020571,instance_merge,rejected,"Những người ở xa phía phải bến tàu bị thùng xanh và đồ trên bến che khuất, nên không thấy rõ một mask có gộp hai người.",Loan
+000000024021,instance_merge,rejected,"Học sinh trong ảnh đen trắng đứng sát qua nhiều hàng, nên các vai và đầu chồng nhau làm cặp được báo khó kiểm bằng mắt.",Loan
+000000025393,instance_merge,rejected,"Các viền xe ở góc trái dưới biển tròn nằm sát nhau trong bóng tối, nhưng phần thân nhìn thấy không đủ để xác nhận hai xe dùng chung mask.",Loan
+000000024027,missing_box,confirmed,"Con diều nhiều màu nằm chéo giữa phần trời và kéo dài gần nửa bề ngang ảnh, hiện rõ từ đầu tới đuôi và có mask ở khung phải nhưng không có bbox bao nó ở khung trái.",Loan
+000000000776,bbox_drift,rejected,"Ba gấu bông màu nâu và kem xếp sát nhau; khung của từng gấu giao nhau do phần đầu và thân bị che, chưa đủ căn cứ kết luận box lệch.",Quan
+000000001353,bbox_drift,rejected,"Nhóm người ngồi trong xe trò chơi màu đỏ ở nhà thi đấu; các khung người chồng lên nhau vì cùng ngồi một khoang, chưa thấy lỗi box riêng biệt.",Quan
+000000002157,bbox_drift,rejected,"Bàn tiệc có bánh phủ quả mọng, nhiều ly chân cao và đĩa thức ăn; box các ly giao nhau trong cụm ly dày, chưa xác định ly nào bị khoanh sai rõ rệt.",Quan
+000000003501,bbox_drift,rejected,"Đĩa cơm trắng, thịt sốt đỏ và bông cải xanh nhìn từ trên xuống; vùng khung phủ các món sát nhau, chưa thấy sai lệch box rõ.",Quan
+000000005001,bbox_drift,rejected,"Đám đông đứng trước cửa hàng trong lễ cắt băng, có trẻ em và bóng bay xanh; nhiều khung người giao nhau do đứng sát, không đủ căn cứ báo lệch.",Quan
+000000005586,bbox_drift,rejected,"Sân quần vợt có vận động viên, trọng tài và khán giả trên khán đài; đường mask kéo dài qua nền sân nhưng chưa tách được lỗi box của đối tượng cụ thể.",Quan
+000000006471,bbox_drift,rejected,"Cầu thủ bóng chày cầm gậy, người bắt bóng và trọng tài ở gần gôn; các box người giao nhau do tư thế thi đấu, chưa thấy box sai rõ.",Quan
+000000007108,bbox_drift,rejected,"Đàn voi đứng gần nhau trên nền đất đỏ, một con ở phía trước che các con phía sau; box chồng do che khuất, chưa thấy lệch khỏi cá thể.",Quan
+000000007795,bbox_drift,rejected,"Phòng ngủ có hai giường đơn, cửa sổ và cửa ra vào; khung lớn bao vùng giường, chưa thấy ranh giới đối tượng sai rõ.",Quan
+000000008277,bbox_drift,rejected,"Đĩa mì sợi cạnh khay thức ăn xanh đặt trên cùng một đĩa trắng; khung vùng thức ăn giao nhau, chưa đủ căn cứ xác nhận lệch.",Quan
+000000009400,bbox_drift,rejected,"Nhóm người làm việc bên nhiều máy tính trong phòng tối; các box giao nhau do màn hình và người che nhau, chưa nhận diện box lệch cụ thể.",Quan
+000000010583,bbox_drift,rejected,"Món ăn xếp tầng phủ sốt trên đĩa trắng; khung bao phần thức ăn, vùng mask có viền không đều nhưng chưa đủ chứng cứ box sai.",Quan
+000000011511,bbox_drift,rejected,"Hai tượng người ngồi trên ghế đá, phía sau có người đi bộ; các khung nhỏ ở hậu cảnh không cho thấy box sai rõ ràng.",Quan
+000000012576,bbox_drift,rejected,"Bàn có bánh pizza, nhiều hộp pizza và người ngồi phía sau; khung giao nhau ở các hộp xếp sát, chưa chứng minh box lệch.",Quan
+000000013546,bbox_drift,rejected,"Người trượt ván ở mép bậc bê tông trong công viên; khung người và ván nằm gần nhau, chưa thấy box bao nhầm đối tượng.",Quan
+000000014038,bbox_drift,rejected,"Phòng khách có tủ, kệ đồ, tủ lạnh và nhiều bóng bay; các khung ở đồ nội thất gần nhau, không thấy box lệch rõ.",Quan
+000000015254,bbox_drift,rejected,"Hộp cơm chia ngăn có cà rốt, nho, rau trộn và cơm thịt; box các ngăn thức ăn liền kề, chưa thấy khoanh sai rõ.",Quan
+000000016010,bbox_drift,rejected,"Đồng cỏ có nhiều động vật ăn cỏ và cây trụi lá phía trước; các con ở xa nhỏ và bị che một phần, chưa xác nhận box lệch.",Quan
+000000017178,bbox_drift,rejected,"Đàn voi đi trên con đường hẹp cạnh hàng rào và ô tô; các cá thể nối đuôi nhau nên box có thể giao nhau, chưa thấy sai rõ.",Quan
+000000017714,bbox_drift,rejected,"Bàn gỗ có hai đĩa thức ăn, cốc cà phê và dao nĩa; khung các vật dụng sát nhau nhưng chưa xác định box lệch khỏi vật.",Quan
+000000018380,bbox_drift,rejected,"Gia đình đông người ngồi quanh bàn ăn trong nhà; các khung người giao nhau do ngồi sát và che khuất, chưa thấy lỗi riêng biệt.",Quan
+000000019109,bbox_drift,rejected,"Dãy xe máy đỗ dọc vỉa hè trước các cửa hàng mái đỏ; xe sát nhau nên khung giao nhau, chưa đủ căn cứ báo lệch.",Quan
+000000020553,bbox_drift,rejected,"Bàn đặt đồ dùng trên nền đất khô, có ghế và nhiều vật dụng nhỏ; các khung đồ vật sát nhau, chưa thấy box sai rõ.",Quan
+000000021839,bbox_drift,rejected,"Người đứng giữa đường phố lúc chạng vạng, phía sau là tòa nhà góc phố sáng đèn; box người bám theo dáng đứng, chưa thấy lệch rõ.",Quan
+000000023126,bbox_drift,rejected,"Ảnh đen trắng một người đứng cạnh con ngựa đang đi; khung người và ngựa giao nhau tại vùng dây cương, không đủ căn cứ xác nhận sai.",Quan
+000000024243,bbox_drift,rejected,"Một người ngồi bên trái và phụ nữ ngồi trong khoang tủ lạnh mở cửa trên vỉa hè; box hai người tách biệt, chưa thấy box sai.",Quan
+000000025057,bbox_drift,rejected,"Người đàn ông cầm đĩa nhựa ngoài bãi cỏ, phía xa có người khác; khung người phía trước tương ứng dáng đứng, chưa thấy lệch rõ.",Quan
+000000025394,bbox_drift,rejected,"Người đứng ở quầy bar rót đồ uống vào ly, phía sau là các chai trên kệ; box người và đồ vật giao nhau do đứng trước quầy, chưa thấy lệch.",Quan
+000000001296,class_disagreement,rejected,"Cô gái tóc đen nhìn vào điện thoại có ốp trắng giữa đám đông; hình người và điện thoại rõ, chưa thấy dấu hiệu đổi nhãn lớp.",Quan
+000000003255,class_disagreement,rejected,"Dãy núi tuyết trắng có đường trượt và một công trình nhỏ phía dưới; vùng màu của công trình nổi trên nền tuyết, chưa đủ chứng cứ đổi nhãn.",Quan
+000000006614,class_disagreement,rejected,"Ảnh tĩnh vật đen trắng có quả lớn, quả nhỏ và các củ nằm phía trước; các vùng quả chạm nhau, chưa xác định nhãn bị đổi.",Quan
+000000007281,class_disagreement,rejected,"Hai người cưỡi ngựa trên bãi cát gần biển; các khung người và ngựa sát nhau nhưng vẫn là đối tượng khác nhau, chưa thấy đổi lớp.",Quan
+000000009400,class_disagreement,rejected,"Nhóm người ngồi làm việc trước máy tính trong phòng tối; các khung màn hình và người xen nhau, chưa đủ căn cứ kết luận đổi lớp.",Quan
+000000009914,class_disagreement,rejected,"Đĩa bánh mì kẹp, khoai chiên và hai bát sốt; các loại đồ ăn nằm sát nhau, chưa thấy box bị gán nhãn sai rõ.",Quan
+000000011197,class_disagreement,rejected,"Người đứng gần biển báo đường phố ở góc giao lộ, có ô tô đỏ phía xa; các vật thể tách biệt, chưa xác nhận đổi lớp.",Quan
+000000012670,class_disagreement,rejected,"Đám đông người đi bộ trên phố, nhiều người mặc áo màu sáng; các box giao nhau do che khuất, chưa thấy đối tượng mang nhãn sai rõ.",Quan
+000000013729,class_disagreement,rejected,"Bốn người đứng nói chuyện trong phòng khách; box người chồng ở vùng tay và chân do tư thế, chưa đủ căn cứ đổi lớp.",Quan
+000000015335,class_disagreement,rejected,"Ba người ngồi ăn trong nhà hàng ánh sáng yếu, xe đạp treo phía sau; khung người và bàn ăn xen nhau, chưa thấy đổi nhãn rõ.",Quan
+000000017207,class_disagreement,rejected,"Phía sau xe buýt trắng xanh có chữ đỏ, bên cạnh là ô tô màu sáng; hai xe riêng biệt, chưa thấy bằng chứng gán sai lớp.",Quan
+000000018380,class_disagreement,rejected,"Gia đình đông người ngồi quanh bàn ăn với nhiều món; các khung người và đồ ăn dày đặc, chưa xác định trường hợp đổi nhãn.",Quan
+000000020571,class_disagreement,rejected,"Thuyền đánh cá neo ở bến, phía sau là núi và mặt nước; các cấu trúc thuyền chồng nhau theo góc nhìn, chưa thấy nhãn sai rõ.",Quan
+000000022371,class_disagreement,rejected,"Người đàn ông đeo cà vạt ngồi trước laptop, cầm kính gần mặt; box người và laptop tách biệt, chưa thấy nhầm lớp.",Quan
+000000023899,class_disagreement,rejected,"Ba người ngồi trong phòng tối xem máy chiếu; các khung người có phần chồng do ngồi gần nhau, chưa xác định đổi nhãn.",Quan
+000000000885,instance_merge,rejected,"Vận động viên quần vợt cúi người đưa vợt trên sân xanh; người và vợt là hai đối tượng riêng, chưa thấy mask gộp hai người.",Quan
+000000002153,instance_merge,rejected,"Cầu thủ bóng chày đứng đánh bóng, người bắt bóng và trọng tài phía sau; các dáng người che nhau tại gôn, chưa thấy mask gộp sai rõ.",Quan
+000000003255,instance_merge,rejected,"Cảnh núi tuyết và công trình nhỏ dưới chân dốc; các vùng màu trên công trình sát nhau, chưa đủ chứng cứ hai instance bị gộp.",Quan
+000000005992,instance_merge,rejected,"Ba con cừu đứng sát nhau cạnh tường gạch, con giữa che một phần con bên phải; vùng mask giao nhau do che khuất, chưa thấy gộp sai rõ.",Quan
+000000006771,instance_merge,rejected,"Đám đông ngoài trời với phụ nữ đội mũ ở giữa; nhiều người bị che một phần nhưng đường mask vẫn theo từng dáng người, chưa thấy gộp.",Quan
+000000008277,instance_merge,rejected,"Đĩa mì cạnh hộp thức ăn màu xanh trên đĩa trắng; mask thức ăn chạm nhau ở rìa, chưa chứng minh hai đối tượng bị gộp.",Quan
+000000009590,instance_merge,rejected,"Nhóm người ngồi ăn quanh bàn gỗ cạnh cửa sổ; cánh tay và đồ ăn che nhau, chưa thấy mask gộp hai người thành một.",Quan
+000000012639,instance_merge,rejected,Cầu thủ bóng chày cầm gậy cạnh người bắt bóng ở sân ngoài trời; hai người đứng gần nhau nhưng không thấy mask gộp rõ.,Quan
+000000014038,instance_merge,rejected,"Phòng sinh hoạt có tủ gỗ, kệ sách và bóng bay xanh vàng; các vật dụng rời nhau, chưa thấy mask nối hai instance cụ thể.",Quan
+000000015751,instance_merge,rejected,"Con chim nhỏ đậu dưới mái gỗ màu xanh, mỏ hướng xuống; vùng chim và mái tiếp xúc nhưng không thấy mask gộp hai con.",Quan
+000000017627,instance_merge,rejected,"Đường phố có nhiều ô tô và xe buýt ở hai bên, phía xa là bức tường đá sáng; các xe sát nhau theo phối cảnh, chưa thấy gộp rõ.",Quan
+000000019109,instance_merge,rejected,"Dãy xe máy đỗ kín trước cửa hàng có mái che đỏ; các xe chồng lên nhau nhưng vẫn thấy nhiều thân xe riêng, chưa xác nhận gộp mask.",Quan
+000000021839,instance_merge,rejected,"Người đứng giữa đường phố lúc tối trước tòa nhà sáng đèn; chỉ thấy một người nổi bật trong vùng box, không có bằng chứng gộp hai người.",Quan
+000000024243,instance_merge,rejected,"Người ngồi trên ghế bên trái, phụ nữ ngồi trong tủ lạnh mở cửa bên phải; hai người cách nhau, không thấy mask gộp họ.",Quan
+000000025394,instance_merge,rejected,"Người pha chế cầm chai tại quầy bar, các chai rượu xếp trên kệ; nhiều chai sát nhau nhưng chưa thấy mask gộp hai chai cụ thể.",Quan
+000000000885,bbox_drift,rejected,"tay vợt đang vung vợt (box 0) và người nhặt bóng phía sau (box 1) cùng hai người ở mép sân (box 6, 8): box nào cũng ôm đúng người, chỉ bị ghép nhầm với viền người đứng gần",An
+000000001532,bbox_drift,rejected,"đường cao tốc đông xe: taxi trắng (box 0), xe van (box 5) và xe nhỏ phía xa (box 7) đều có box khít với xe, không thấy box nào bị dịch",An
+000000002299,bbox_drift,rejected,"ảnh lớp học đen trắng, các em ngồi xếp hàng sát nhau; box 5 đến 15 và box 21 vẫn ôm đúng từng em, chỉ vì đứng chen nhau nên box chạm viền em bên cạnh",An
+000000003845,bbox_drift,rejected,"món xào có hai miếng bông cải (box 3 và box 4), mỗi box đều ôm trọn miếng bông cải của nó, viền panoptic khớp với box",An
+000000005037,bbox_drift,rejected,"xe buýt trắng hồng chiếm gần hết ảnh, hai người nhỏ đứng xa (box 2, 3) và chiếc xe con (box 9) đều có box khớp với vật",An
+000000005600,bbox_drift,rejected,"hai bát inox: bát thịt phía sau (box 2) và bát trứng muối phía trước (box 1), box khít với bát, không lệch",An
+000000006763,bbox_drift,rejected,người đàn ông áo tím đeo cà vạt (box 2) và người đứng mép trái (box 6) có box đúng người; IoU thấp chỉ vì hai người đứng sát nhau,An
+000000007281,bbox_drift,rejected,"người cưỡi ngựa trắng mặc đồ trắng (box 2) có box ôm cả người đang nghiêng trên lưng ngựa, khớp với viền người",An
+000000007816,bbox_drift,rejected,"người lái mô tô đội mũ bảo hiểm trắng cùng nhóm khán giả bên đường (box 1, 2, 3, 4, 5, 6, 8, 9, 10); các box nhỏ ôm đúng từng người, không bị đẩy lệch",An
+000000008690,bbox_drift,rejected,"bé gái váy hoa (box 1) và người đứng ở mép trái ảnh (box 0) đều có box ôm đúng người, chỉ chồng lên viền con dê đen phía trước",An
+000000009590,bbox_drift,rejected,"box 22 không lệch mà ôm đúng chiếc bát xanh trắng trên bàn (viền panoptic ghi bowl, detection lại ghi cup, nghi sai lớp); cốc box 24 cạnh chai trắng cũng khớp",An
+000000010707,bbox_drift,rejected,"phòng khách: người đàn ông áo trắng đứng (box 6), hai người ngồi trên ghế đỏ (box 4, 5) và hai lon/cốc trên bàn (box 7, 10) đều có box đúng vị trí",An
+000000011699,bbox_drift,rejected,"hai mẹ con đứng tạo dáng trên tàu, mẹ áo đỏ (box 0) và con áo xanh ngọc (box 1), box khít người dù vai hai người chạm nhau",An
+000000012639,bbox_drift,rejected,"các box 1, 2, 3, 4, 5, 7, 8, 12, 13, 14 là khán giả ngồi xa trên cỏ, panoptic gom họ thành một vùng đám đông nên IoU thấp, box vẫn đúng người",An
+000000013659,bbox_drift,rejected,"phòng sinh hoạt có người đội mũ len vàng (box 17), hai người ngồi bàn (box 8, 9) và mấy chiếc ghế (box 1, 4, 15); box nào cũng nằm đúng vật",An
+000000014226,bbox_drift,rejected,"hai chiếc ghế bọc vải trong góc tối (box 0 và box 4) đều có box ôm đúng ghế, ánh sáng tối làm viền trông mờ nhưng không lệch",An
+000000015335,bbox_drift,rejected,"quán ăn tối, cậu bé đang ăn ở giữa và những người ngồi quanh (box 1, 2, 4, 5, 6, 8, 14); box đúng người, chỉ vì ảnh tối và người ngồi chen nhau",An
+000000016228,bbox_drift,rejected,"xe ngựa kéo ở công viên: mấy người đi bộ (box 4, 5, 12, 13, 16) và cây dù vàng (box 10) đều có box khớp, không thấy box trượt khỏi vật",An
+000000017182,bbox_drift,rejected,"dãy sách bìa xanh xếp sát nhau (box 1 đến box 6), mỗi quyển rất mỏng nên box dễ chạm quyển kế bên, nhưng từng box vẫn đúng quyển của nó",An
+000000017899,bbox_drift,rejected,"hai cốc thủy tinh xếp chồng trên bàn (box 6 và box 9), mỗi box ôm đúng một cốc, viền panoptic khớp",An
+000000018491,bbox_drift,rejected,"sân bóng chày: hai cầu thủ ở gôn (box 3, 4) và mấy người đứng xa (box 5, 6, 8, 9); box đúng người, chỉ chồng lên nhau khi đứng gần",An
+000000019402,bbox_drift,rejected,"hai người trùm mũ áo khoác lông chen sát nhau (box 0 và box 1), box mỗi người vẫn đúng người, chỉ trùm lên nhau một phần",An
+000000020571,bbox_drift,rejected,"bến cảng có tàu cá xanh (box 1) và người đứng nhỏ trên bờ (box 7); box tàu ôm cả cột buồm, box người đúng vị trí",An
+000000022589,bbox_drift,rejected,"con cừu nhìn thẳng vào máy ảnh (box 0), box ôm phần đầu và lưng cừu, viền panoptic cũng nằm đúng chỗ đó",An
+000000023781,bbox_drift,rejected,"rổ rau có mấy củ cà rốt nằm chéo nhau (box 1, 3, 4, 5, 6), box của từng củ vẫn đúng củ, chỉ chồng lên nhau vì các củ nằm đè",An
+000000024567,bbox_drift,rejected,"khay bánh mì kẹp xúc xích xếp sát nhau (box 2, 3, 4, 5, 7), mỗi box đúng một chiếc, không có box nào trượt ra ngoài",An
+000000025139,bbox_drift,rejected,"hai con ngựa vằn: con cận cảnh (box 0) và con phía sau (box 1), box mỗi con khớp với viền của nó",An
+000000000776,class_disagreement,rejected,"box 3 là chiếc giường phủ kín cả ảnh, panoptic gán teddy bear vì mấy con gấu bông nằm đè lên giường; box và lớp đều đúng",An
+000000002431,class_disagreement,rejected,"box 4 đúng là chiếc thìa đặt trong cốc trắng, panoptic gán cup chỉ vì thìa nằm trong cốc, thìa vẫn có viền spoon riêng",An
+000000004795,class_disagreement,rejected,"con mèo xám (box 0) nằm trước màn hình (box 2), hai box chồng lên nhau nên bị ghép chéo; mèo vẫn có viền cat, màn hình có viền tv",An
+000000006723,category_swap,confirmed,"box 4 là xe tải kéo màu trắng có đèn nóc, detection ghi truck đúng, nhưng panoptic lại gán chiếc xe này là bus",An
+000000007816,class_disagreement,rejected,"box 10 là người lái mô tô ngồi trên xe, panoptic gán motorcycle vì người và xe dính nhau; người vẫn có viền person riêng",An
+000000009448,class_disagreement,rejected,"box 0 là chiếc dù xanh che kín phía sau, bé gái đứng trước dù nên panoptic gán person; dù vẫn có viền umbrella riêng",An
+000000010092,class_disagreement,rejected,"box 4 là ghế gỗ kê sát bàn ăn tròn, panoptic gán dining table vì ghế bị bàn che; ghế vẫn có viền chair riêng",An
+000000011699,class_disagreement,rejected,"box 3 và box 5 là hai túi xách đeo trên người hai mẹ con, nên panoptic gán person; túi vẫn có viền handbag riêng",An
+000000013004,class_disagreement,rejected,"box 0 là quả chuối cong đặt trong bát cạnh bơ đậu phộng, panoptic gán dining table vì box chuối phủ lên mặt bàn; chuối có viền banana riêng",An
+000000013923,class_disagreement,rejected,"box 5 là ghế đỏ kê sát bàn tròn trắng, panoptic gán dining table vì phần bàn lọt vào box ghế; ghế vẫn có viền chair",An
+000000015497,class_swap,confirmed,"box 2 phủ cả tấm nệm sofa đen mà con mèo đang nằm, panoptic ghi couch đúng nhưng detection lại ghi chair còn box 0 con mèo thì đúng",An
+000000017436,class_disagreement,rejected,"box 1 là băng ghế đá có ông cụ ngồi lên, panoptic gán person vì người ngồi đè lên ghế; ghế vẫn có viền bench riêng",An
+000000018575,class_disagreement,rejected,"box 1 là cả mặt bàn ăn với hai đĩa hamburger và salad, panoptic gán bowl vì bát nước sốt nằm trên bàn; bàn vẫn đúng lớp",An
+000000021465,category_swap,confirmed,"box 1 là chiếc ghế đơn có mặt ngồi đan cói và chân sắt, detection ghi chair đúng, nhưng panoptic lại gán bench",An
+000000022705,class_disagreement,rejected,"cô gái váy đen (box 2) đứng ngay trước tủ lạnh inox (box 1), hai box chồng nhau nên bị ghép chéo; tủ có viền refrigerator, người có viền person",An
+000000023937,class_disagreement,rejected,"box 5 (bò) và box 2 (cừu) là hai con vật nhỏ màu trắng lẫn trong cỏ cạnh gốc cây, mỗi con có viền đúng lớp của nó, chỉ là box chồng nhau",An
+000000001000,instance_merge,rejected,"nhóm học sinh chụp ảnh trên sân tennis; segment bị nghi ở box 8 và 10 thực ra là cô bé váy đen đứng giữa cậu bé áo đỏ (box 8) và cô gái áo xanh ngọc (box 10), cặp box 5 và 6 cũng mỗi người một viền",An
+000000002157,instance_merge,rejected,"các ly rượu (box 4 và 8, 4 và 7, 5 và 6) chỉ đè nhau về box, mỗi ly có viền panoptic riêng nên không bị gộp, dao (box 0) và cây xúc bánh (box 15) cũng mỗi vật một viền riêng",An
+000000004134,instance_merge,rejected,"person box 6 và box 21 (hai người), chair box 19 và box 22 (hai ghế), wine glass box 10 và box 11 (hai ly rượu) chỉ đè nhau về box, mỗi vật có segment riêng nên không bị gộp",An
+000000006040,instance_merge,rejected,"bốn người ngồi trong khoang tàu được nhìn thấy qua cửa sổ thứ nhất và thứ hai từ phải qua có viền tách riêng nhau ra mặc dù box chồng lên nhau""",An
+000000006954,instance_merge,rejected,"cậu bé ôm đĩa ném (box 1) ngồi sát em gái bên cạnh (box 3), mỗi em có viền riêng. Em gái nhỏ bên trái (box 2) và cậu bé áo len xanh ôm đĩa Ultimate (box 4) cũng ngồi sát nhau nhưng viền không dính vào nhau",An
+000000008690,instance_merge,rejected,"Cô bé đứng ở bên phải (box 0) và bé gái váy hoa đang cúi xuống con dê đen (box 1) chỉ đè nhau về box, mỗi người có viền riêng",An
+000000009891,instance_merge,rejected,"xe trắng ở giữa (box 7) có viền đỏ, phần xe ở rìa phải (box 12) có viền cam, hai viền tách riêng dù box chồng nhau",An
+000000012670,instance_merge,rejected,nhóm người phụ nữ tập trung đông ở giữa hình mặc dù box chồng lấn nhau nhưng viền đều được tách ra và được tô với các màu riêng biệt,An
+000000015254,instance_merge,rejected,"các củ cà rốt xếp sát nhau trong hộp xanh lá: củ sát mép trái (box 7) có viền riêng, tách khỏi củ ở giữa (box 5) và củ kế bên (box 6)",An
+000000016228,instance_merge,rejected,"người đi bộ ở xa nên ảnh nhỏ: người áo trắng (box 19) và em bé áo xanh đi phía trước (box 13) có hai viền riêng""",An
+000000017959,instance_merge,rejected,"nhiều cánh diều bay gần nhau: diều tam giác tím (box 9) và diều cá hề (box 11), diều cá hề bay thấp (box 12) và diều tam giác xanh (box 13), diều cá hề bên phải (box 10) và diều tam giác xanh trên cùng (box 15), cái nào cũng có viền riêng",An
+000000019402,instance_merge,rejected,"hai người trùm mũ áo khoác lông chen sát nhau, người bên trái (box 0) viền xanh lá, người bên phải (box 1) viền xanh dương",An
+000000023781,instance_merge,rejected,"hai củ cà rốt nằm chéo lên nhau, củ phía trên (box 3) và củ phía dưới (box 1) mỗi củ có một viền riêng",An
+000000024567,instance_merge,rejected,"7 chiếc hot dog đều tách biệt nhau, box riêng và viền riêng",An
+000000009769,missing_box,rejected,fire hydrant có box cho vật này,An
