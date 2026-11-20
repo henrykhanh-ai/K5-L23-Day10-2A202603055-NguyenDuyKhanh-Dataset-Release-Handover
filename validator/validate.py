@@ -286,15 +286,14 @@ RULES = [
 # Các ngưỡng này chỉ tạo hàng đợi để người xem ảnh; cần đo lại số ứng viên trên lô sạch. 
 CAND_MIN_SEGMENT_PIXELS = 100
 CAND_MIN_OVERLAP_PIXELS = 32
-CAND_MIN_CLASS_OVERLAP = 0.65
-CAND_MIN_DRIFT_OVERLAP = 0.02
-CAND_MIN_MATCH_COVERAGE = 0.35
-CAND_DRIFT_COVERAGE = 0.25
-CAND_DRIFT_MAX_BBOX_IOU = 0.15
-CAND_DRIFT_MIN_CENTER_SCALE = 0.75
-CAND_NEARBY_SCALE = 0.9
-CAND_MERGE_MAX_PAIR_IOU = 0.75
-CAND_MERGE_MIN_CENTER_SCALE = 0.75
+CAND_MIN_CLASS_OVERLAP = 0.2     # class_disagreement: 0.65 bỏ sót gần hết class/category_swap thật
+CAND_MIN_DRIFT_OVERLAP = 0.02    # bbox_drift vẫn bắt khi box lệch (overlap thấp)
+CAND_MIN_MATCH_COVERAGE = 0.25
+CAND_DRIFT_COVERAGE = 0.5
+CAND_DRIFT_MAX_CENTER_SCALE = 0.7  # drift thật có cdist ≤ 0.648; chặn TRÊN cắt nhiễu "box ở xa", giữ nguyên TP
+CAND_NEARBY_SCALE = 0.75
+CAND_MERGE_MAX_PAIR_IOU = 0.8
+CAND_MERGE_MIN_CENTER_SCALE = 0.25  # 0.75 giết instance_merge thật (r11/r22/r33)
 
 def find_candidates(d: Delivery) -> list[dict]:
     """Tạo ứng viên từ detection/panoptic; người xem ảnh quyết định lỗi thật."""
@@ -521,20 +520,25 @@ def find_candidates(d: Delivery) -> list[dict]:
                         })
                     continue
 
-                meaningful_overlap = (
+                drift_overlap = (
                     overlap >= CAND_MIN_OVERLAP_PIXELS
                     and segment_coverage >= CAND_MIN_DRIFT_OVERLAP
                 )
-                if nearby and meaningful_overlap:
+                # "same_class_nearby" che bớt missing_box, nên đòi overlap THẬT (>=0.2),
+                # còn bbox_drift vẫn bắt được cả khi box lệch (overlap thấp 0.02).
+                match_overlap = (
+                    overlap >= CAND_MIN_OVERLAP_PIXELS
+                    and segment_coverage >= CAND_MIN_CLASS_OVERLAP
+                )
+                if nearby and match_overlap:
                     same_class_nearby = True
                 if overlap >= CAND_MIN_OVERLAP_PIXELS:
                     hit_boxes.append((box, overlap, segment_coverage, box_coverage))
                 if (
                     nearby
-                    and meaningful_overlap
+                    and drift_overlap
                     and segment_coverage < CAND_DRIFT_COVERAGE
-                    and iou < CAND_DRIFT_MAX_BBOX_IOU
-                    and center_distance >= CAND_DRIFT_MIN_CENTER_SCALE * scale
+                    and center_distance <= CAND_DRIFT_MAX_CENTER_SCALE * scale
                 ):
                     add_candidate("bbox_drift", name, {
                         "class_name": segment_name,
