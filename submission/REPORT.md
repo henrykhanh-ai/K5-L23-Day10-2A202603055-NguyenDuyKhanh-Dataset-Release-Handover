@@ -27,13 +27,49 @@ cái thấy rõ là lỗi, còn lại `rejected`. Đây là lý do hàng đợi 
 tại sao không được "confirm hàng loạt".
 
 ## 3. Quyết định và lineage
-<<QC v1 a/b, kết luận, vì sao R-021 phải xem lại hoặc train lại.>>
+- **QC v1:** `errors.json` chốt sau review có **17 lỗi trên 250 ảnh = 6,8%** (10 lỗi luật,
+  7 lỗi gán nhãn đã `confirmed` bằng xem ảnh). Ngưỡng của lab là 2%, 6,8% > 2% nên
+  **kết luận v1: HOLD**, không phát hành `lab250_12a734d6195d`.
+- **Lineage:** ghi `decision HOLD` cho v1, rồi chạy `lineage.py impact`: training run
+  **R-021 đã train trên v1 → affected=True, action=review_or_retrain**.
+- **Vì sao R-021 phải xem lại hoặc train lại:** sửa dataset không tự sửa model đã học.
+  R-021 đã học từ các nhãn sai của v1 (ví dụ 4 ảnh `class_swap`, 1 ảnh `missing_box`,
+  box trùng, box tràn mép), nên phải đánh giá lại trên dữ liệu đã sửa, và nếu kết quả bị
+  ảnh hưởng thì train lại trên v2.
+- **v2:** bàn giao `lab250_12a734d6195d_v2` (parent = v1), **241 ảnh, 1669 nhãn**.
+  9 ảnh lỗi nhãn detection tách sang `rework_queue.csv`, giao lại đúng người gán/người kiểm
+  theo `jobs.csv`. 4 ảnh chỉ lỗi panoptic (6723, 21465 `category_swap`; 12639 `thing_overlap`;
+  21503 `invalid_category_id`) ở lại v2 vì nhãn detection vẫn đúng, đã ghi chú báo team panoptic.
+  Lineage ghi `release` cho v2 với parent là v1; v1 trong `delivery/` không bị sửa.
 
 ## 4. Hash chứng minh gì, không chứng minh gì?
-<<>>
+- **Chứng minh được:** file hiện tại **giống từng byte** với file lúc manifest được ghi
+  (sha256 tính trên bytes). Nếu hash khớp thì file không bị đổi, hỏng hay tráo trong lúc
+  chuyển giao; `release_id` tính từ `manifest.json` + `metadata.json` nên sửa v1 là id đổi.
+- **Không chứng minh được:** hash **không nói nhãn đúng hay sai**. Một file nhãn gán sai lớp
+  vẫn có hash khớp hoàn toàn nếu manifest được ghi sau khi gán sai. Lỗi gán nhãn chỉ phát hiện
+  được bằng đối chiếu detection ↔ panoptic và xem ảnh.
+- **Ví dụ trong lô:** 2 ảnh `wrong_hash` (000000000785, 000000023272). Nhóm mở kiểm từng ảnh:
+  ảnh mở được, đúng nội dung → **ảnh còn nguyên, chỉ manifest v1 ghi sai hash**, nên v2 giữ ảnh
+  và ghi hash mới trong `manifest.csv`. Hash lệch chỉ cho biết "file và manifest không khớp",
+  phải mở file mới biết bên nào sai.
 
 ## 5. Truy vết
-<<Tiêu chí tầng a/b, vì sao lấy guideline theo job.>>
+- **Ticket:** team AI báo model hay bỏ sót `cup` bị che hoặc ở mép ảnh, thấy rõ ở
+  scene_473 và scene_493. **Changelog:** v1.3 bắt buộc gán box cho `cup` bị che >50% hoặc
+  cắt mép; v1.2 cho phép bỏ qua. Vậy ảnh rủi ro là ảnh gán theo **v1.2** có `cup`.
+- **Tiêu chí:** job theo guideline cũ v1.2 (J01–J04 trong `jobs.csv`) **và** ảnh có ít nhất
+  một box detection lớp `cup` (class 41) trong `labels/` của lô.
+  - **tier_a** (trong các cảnh team AI nêu): 000000002592, 000000002685 (scene_473),
+    000000003661 (scene_493) — 3 ảnh.
+  - **tier_b** (cùng điều kiện, chưa ai báo): 000000002157, 000000002431, 000000003845,
+    000000003934, 000000009400, 000000009590 — 6 ảnh.
+  - **notify:** người gán và người kiểm của các job chứa ảnh tầng a/b: **A04, A05, Q01**.
+- **Vì sao lấy guideline theo job, không theo từng ảnh:** guideline ghi ở từng ảnh trong
+  `metadata.json` có thể chính là lỗi `guideline_mismatch` (lô này có ảnh 000000015597 ghi v1.2
+  nhưng job J07 là v1.3). Job mới là đơn vị được giao việc và ban hành guideline, nên dùng
+  `jobs.csv` để quyết ảnh nào bị gán theo quy tắc cũ.
+- `trace.json` do D làm; A kiểm lại bằng một script nhỏ (AI viết, chỉ đọc `jobs.csv`, `metadata.json`, `labels/`) ra cùng kết quả.
 
 ## 6. Bug hoặc điểm chưa rõ trong lab (nếu có)
 <<>>
