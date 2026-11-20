@@ -164,3 +164,16 @@ Lô sạch 50 ảnh: cả 4 luật đều báo 0.
 
 Rút ra: AI giúp viết code nhanh, nhưng em phải đọc dữ liệu thật, kiểm từng ảnh bị báo và đọc
 `git diff` trước khi commit thì mới chắc không sai và không làm hỏng code của bạn khác.
+## 5. Review ảnh, security.md và README.txt v2
+
+- **Review 59 ứng viên (Pha 2):** em tự mở từng ảnh trong gói review và tự kết luận
+  58 rejected, 1 confirmed (000000024027 missing_box: con diều lớn có mask nhưng không có box,
+  job J10 theo v1.3). AI chỉ soát định dạng file CSV (verdict, type, độ dài note, không trùng),
+  không quyết định thay em.
+- **security.md:** em tự chọn 2 ảnh có mặt người rõ (000000016598, 000000019924) và tự mô tả;. AI kiểm file theo luật H17.
+- **README.txt v2:** AI soạn từ số liệu bạn An gửi (so_lieu_v2.txt); em kiểm lại các số:
+  17 = 10 lỗi luật + 7 lỗi gán nhãn đã confirmed, 241 = 250 - 9 ảnh rework.
+- **Chỗ phải sửa:** lần đầu em ghi verdict là false_positive/uncertain (sai định dạng) và để nguyên
+  note của máy, sau đó sửa lại; khi dán prompts.md lần trước em lỡ xoá phần A của Khánh, phát hiện
+  khi git pull báo conflict và đã ghép lại đủ 4 phần; release_id trên máy em (lab250_afa095a47015)
+  khác máy An (lab250_12a734d6195d) nên phải sửa id trong security.md cho khớp lô An bàn giao.
