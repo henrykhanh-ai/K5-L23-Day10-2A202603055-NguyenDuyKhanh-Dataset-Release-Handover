@@ -47,3 +47,35 @@ cuối là của mình, không phải AI tự chốt.
 
 Rút ra: AI dựng khung và đo ngưỡng nhanh, nhưng **kết luận cuối (ngưỡng, đóng gói,
 độ tin của công cụ) là mình kiểm lại và quyết**.
+
+---
+
+# Dùng AI — phần D (Thúy An)
+
+Phần này mình (D — Thúy An) ghi lại việc dùng AI cho công cụ xem ảnh `tools/view.py`.
+
+## 1. Nhờ AI làm gì
+
+Mình nhờ AI (Claude Code) viết `tools/view.py`: vẽ box YOLO (kèm tên lớp) và viền
+segment panoptic lên ảnh, xuất PNG + `index.html` để review bằng mắt ở Pha 2. Công cụ
+dùng Pillow (chỉ ở công cụ xem; `validator/` vẫn chỉ thư viện chuẩn) và **chỉ đọc thư
+mục delivery**, không đọc `_private/`. Mình yêu cầu chạy được trên cả Mac và Windows.
+
+## 2. AI sai ở đâu
+
+- **Mất viền cạnh trái/trên của vật thể:** lần đầu AI chỉ so điểm ảnh với láng giềng
+  bên phải và bên dưới, nên viền panoptic bên trái/trên bị mất (mình thấy ở ảnh nhà vệ
+  sinh). Đã sửa thành so cả 4 hướng.
+- **Ảnh quá rộng và rối:** bản đầu xuất 5772 px, vẽ cả viền vùng nền (stuff) nên khó
+  nhìn. Đã giảm còn 2 khung, chỉ viền vật thể (thing), phóng 2 lần.
+- **Lỗi font/phiên bản (Windows):** AI viết giả định font và hàm Pillow chỉ có trên
+  Mac; khi thử giả lập thiếu font thì chạy lỗi. Đã thêm danh sách font dự phòng, chữ
+  ASCII khi không có font, và bỏ hàm đã cũ (`getdata`).
+
+## 3. Mình kiểm tra thế nào
+
+- Chạy trên 10 ảnh mẫu và đối chiếu bằng mắt: viền ôm đủ 4 phía.
+- Không tin mắt thuần: với ảnh nghi lỗi mình kiểm bằng số (IoU giữa box và segment)
+  rồi mới kết luận; một số chỗ lệch là sai khác tự nhiên của COCO (đa giác thô, bị
+  che), không phải lỗi gài.
+- Đã gửi gói test cho cả nhóm chạy trên Windows (kết quả: chờ báo cáo từng bạn).
