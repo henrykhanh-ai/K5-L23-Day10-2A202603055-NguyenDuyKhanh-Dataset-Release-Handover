@@ -6,11 +6,10 @@ và 5 lỗi phần A: `missing_image`, `wrong_hash`, `invalid_class`,
 
 ## 1. Nhờ AI làm gì
 
-Mình nhờ AI (Claude Code trong VS Code) dựng **khung `validate.py`**: phần CLI
+Mình nhờ AI (app Claude, có quyền đọc/ghi thư mục repo trên máy mình) dựng **khung `validate.py`**: phần CLI
 (`argparse` đọc thư mục delivery, `--out`, `--candidates`), lớp `Delivery` đọc
 `manifest.json` / `classes.txt` / nhãn YOLO, và viết **5 hàm `check_*` của phần A**.
-Mình yêu cầu AI mô tả yêu cầu từng lỗi trước khi viết, rồi giải thích từng khối để
-mình tự giải thích lại được khi vấn đáp. Các hàm của B (metadata/panoptic) và C
+Các hàm của B (metadata/panoptic) và C
 (đối chiếu) để trống `TODO`, không nhờ AI làm thay.
 
 ## 2. Ai quyết định ngưỡng
@@ -39,11 +38,22 @@ cuối là của mình, không phải AI tự chốt.
 
   Lệnh: `python validator/validate.py runs/<seed>/delivery --out runs/<seed>/rules.json`.
 
-## 4. Một lần AI sai
+## 4. AI sai ở đâu
 
-- **Nén zip lần đầu bị lỗi:** lần đầu nhờ AI đóng gói, bước nén `.zip` chạy lỗi
-  (không ra file đúng như mong đợi). Mình phát hiện khi kiểm lại đầu ra, báo lại và
-  làm lại mới xong.
+- **Nén zip gói 10 ảnh mẫu bị lỗi:** lệnh nén đầu tiên của AI báo lỗi và để lại một file
+  zip rỗng, AI phải nén lại bằng cách khác và mình phải tự xoá file rỗng. (Gói này sau đó nhóm bỏ, không thuộc bài nộp.)
+
+## 5. Các phần khác mình nhờ AI (ngoài validator)
+
+- **Gộp review:** AI gộp 4 file review thành `review_log.csv` (thêm cột `reviewer`) và
+  kiểm định dạng: phát hiện file có ký tự BOM do mở bằng Excel, file mất số 0 đầu tên ảnh,
+  ghi chú còn là chữ máy, và một bản ghi chú tả hai cảnh khác nhau cho cùng một ảnh →
+  nhóm sửa lại. **Verdict confirmed/rejected là người trong nhóm tự xem ảnh và quyết**;
+  AI không xem ảnh thay.
+- **REPORT mục 3–6:** AI viết nháp từ số liệu thật của nhóm (QC, lineage, trace, lỗi
+  hash); mình đọc lại, chỉnh và chịu trách nhiệm nội dung.
+- **Kiểm `trace.json`:** AI viết script nhỏ chỉ đọc `jobs.csv`, `metadata.json`,
+  `labels/` để tính lại, ra trùng bản của D.
 
 Rút ra: AI dựng khung và đo ngưỡng nhanh, nhưng **kết luận cuối (ngưỡng, đóng gói,
 độ tin của công cụ) là mình kiểm lại và quyết**.

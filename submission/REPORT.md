@@ -3,7 +3,10 @@
 ## 1. Số liệu luyện tập
 - F1 theo seed (rule / cross_check / overall): lỗi luật F1 ≈ 1,0 trên lô sạch và các
   seed (đo bằng `score_findings.py` chế độ học viên — chỉ in F1 làm tròn, không đọc
-  `_private`). Phần cross_check đo sau khi cả nhóm review xong `review_log.csv`.
+  `_private`). Sau khi cả nhóm review xong r5007 (234 dòng, 7 `confirmed`): lỗi luật
+  F1 ≈ 1,0 · lỗi gán nhãn F1 ≈ 0,4 · tổng ≈ 0,7. Lỗi gán nhãn thấp vì nhóm không confirm
+  dòng `bbox_drift`/`instance_merge` nào (169/234 ứng viên) — nhiều khả năng bỏ sót; rút
+  kinh nghiệm cho đề ẩn: confirm khi box dời hẳn khỏi một vật đứng riêng.
 - Số ứng viên trên lô sạch (`runs/clean`, 50 ảnh, `--no-faults`): **66**; hàng đợi trên
   seed luyện tập `r5007`: **234 ứng viên**.
 - Ngưỡng đã chọn và cách chọn (**không dùng `_private`**): các ngưỡng trong
@@ -72,4 +75,15 @@ tại sao không được "confirm hàng loạt".
 - `trace.json` do D làm; A kiểm lại bằng một script nhỏ (AI viết, chỉ đọc `jobs.csv`, `metadata.json`, `labels/`) ra cùng kết quả.
 
 ## 6. Bug hoặc điểm chưa rõ trong lab (nếu có)
-<<>>
+- **Mã release phụ thuộc vào phiên bản zlib của máy.** Khi tạo lại lô seed 5007 trên một
+  môi trường dùng zlib-ng (Python 3.13), `release_id` ra `lab250_4758e9a8ad9a`, còn trên máy
+  nhóm (zlib chuẩn) là `lab250_12a734d6195d`. Ảnh và nhãn có cùng sha256; chỉ mask PNG khác
+  hash vì `inject_release.py` nén lại mask bằng zlib, mà mỗi bản zlib nén ra bytes khác nhau.
+  Hệ quả: chạy `export_submission --import` + `check_handover` trên máy có zlib khác sẽ báo
+  H4 FAIL (không tìm thấy thư mục `<release_id>_v2`) dù bài đúng. Trên máy nhóm chạy lại
+  ra 17 PASS. Gợi ý: tính release_id/hash mask trên dữ liệu pixel thay vì bytes đã nén,
+  hoặc ghi rõ phiên bản Python/zlib cần dùng. Đây cũng là ví dụ cho mục 4: hash chứng
+  minh "bytes giống nhau", không chứng minh "nội dung giống nhau".
+- **Lineage chỉ nằm trên máy chạy `run_lab.py`.** `runs/` không được commit nên mỗi máy có
+  một lineage riêng; nhóm phải chốt một máy (của D) làm HOLD, release v2 và
+  `export_submission`, nếu không bài nộp dễ mang lineage thiếu HOLD.

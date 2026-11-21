@@ -1,3 +1,5 @@
+# Day 10 Lab — Nhóm 05
+
 <p align="center">
   <img src="docs/assets/hero.png" alt="Day 10 Lab: Bàn giao dataset và Truy vết" width="100%">
 </p>
